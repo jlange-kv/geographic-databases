@@ -14,6 +14,8 @@ This guide compares different file formats for storing vector geographic data.
 
 See the [Decision Tree][decision-tree] for a guided selection process.
 
+**Need concurrent writes, complex spatial operations, or multi-user access?** File formats may not be enough — consider a database like [PostgreSQL + PostGIS][postgis].
+
 ## Storage Architecture
 
 Understanding how data is organized helps you choose the right format:

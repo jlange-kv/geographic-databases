@@ -35,6 +35,13 @@ def memory_usage_mb(gdf: gpd.GeoDataFrame) -> float:
 
 
 def main():
+    if not FGB_PATH.exists():
+        print(f"Data file not found: {FGB_PATH}")
+        print()
+        print("Run process_data.py first to generate the FlatGeobuf files.")
+        print("See process_data.py for download instructions.")
+        return
+
     print("=== FlatGeobuf Spatial Filtering Demo ===\n")
     print(f"Averaging over {N_RUNS} runs\n")
 

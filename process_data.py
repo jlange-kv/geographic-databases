@@ -3,6 +3,9 @@
 Reads all shapefile layers from data/raw/gruvedata/ and writes each
 as a separate FlatGeobuf file to data/processed/.
 
+The raw shapefiles can be ordered from:
+https://kartkatalog.geonorge.no/metadata/grus-og-pukk/a26e57bc-15bd-46db-8504-6c6ed1e7c501
+
 Note: Uses fiona engine because pyogrio has encoding issues with
 Norwegian characters in these particular shapefiles.
 """
@@ -14,8 +17,22 @@ import geopandas as gpd
 RAW_DIR = Path("data/raw/gruvedata")
 OUTPUT_DIR = Path("data/processed")
 
+DATA_URL = (
+    "https://kartkatalog.geonorge.no/metadata/grus-og-pukk/"
+    "a26e57bc-15bd-46db-8504-6c6ed1e7c501"
+)
+
 
 def process_shapefiles():
+    if not RAW_DIR.is_dir() or not list(RAW_DIR.glob("*.shp")):
+        print(f"No shapefiles found in {RAW_DIR}/")
+        print()
+        print("To get the data:")
+        print(f"  1. Order shapefiles from: {DATA_URL}")
+        print(f"  2. Extract and save to: {RAW_DIR}/")
+        print("  3. Run this script again")
+        return
+
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     shapefiles = sorted(RAW_DIR.glob("*.shp"))
