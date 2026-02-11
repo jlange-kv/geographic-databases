@@ -1,0 +1,942 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Spatial Indexing - geographic-databases</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#spatial-indexing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="geographic-databases" class="md-header__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            geographic-databases
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Spatial Indexing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="geographic-databases" class="md-nav__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    geographic-databases
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file-formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-regular-indexes-dont-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Regular Indexes Don't Work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-spatial-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a Spatial Index?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-r-tree-is-constructed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the R-tree is Constructed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How the R-tree is Constructed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hierarchical-bounding-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hierarchical Bounding Boxes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-each-node-contains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Each Node Contains
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#important-property-boxes-can-overlap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important Property: Boxes Can Overlap
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-the-index-is-compact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the Index is Compact
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-spatial-search-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Spatial Search Works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Spatial Search Works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#search-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Search Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Search
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flatgeobuf-streaming-with-spatial-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FlatGeobuf Streaming with Spatial Index
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FlatGeobuf Streaming with Spatial Index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streaming-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Streaming Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-offs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Trade-offs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benefits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#costs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Costs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-spatial-indexes-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Spatial Indexes Matter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When Spatial Indexes Matter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#essential-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Essential for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#less-important-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Less important for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spatial-index-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spatial Index Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Topics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="spatial-indexing">Spatial Indexing<a class="headerlink" href="#spatial-indexing" title="Permanent link">&para;</a></h1>
+<p>Understanding how spatial queries are optimized is fundamental to working with geographic data efficiently.</p>
+<h2 id="the-problem-regular-indexes-dont-work">The Problem: Regular Indexes Don't Work<a class="headerlink" href="#the-problem-regular-indexes-dont-work" title="Permanent link">&para;</a></h2>
+<p>Traditional database indexes (B-trees) work great for one-dimensional queries:
+- "Find all users with age &gt; 30" → Index on age column
+- "Find products with price &lt; 100" → Index on price column</p>
+<p>But spatial queries are <strong>multi-dimensional</strong>:
+- "Find all buildings within 5km of this point"
+- "Show me roads that intersect this area"
+- "Which countries overlap with this bounding box?"</p>
+<p>A B-tree can't efficiently answer "which points are near THIS point?" because <strong>proximity in 2D space doesn't translate to simple number comparisons</strong>. You can't sort geographic features in a way that preserves spatial relationships.</p>
+<p>Without a spatial index, the database must check every single feature against your query - slow for large datasets.</p>
+<h2 id="what-is-a-spatial-index">What is a Spatial Index?<a class="headerlink" href="#what-is-a-spatial-index" title="Permanent link">&para;</a></h2>
+<p>A <strong>spatial index</strong> organizes geographic data by location to enable fast spatial queries. The most common type is the <strong>R-tree</strong> (Rectangle tree), which creates a <strong>hierarchy of bounding boxes</strong> around your data.</p>
+<p><strong>Core idea:</strong> Group nearby features into rectangular bounding boxes, then group those boxes into larger boxes, creating a tree structure. This lets you quickly eliminate large portions of data that can't possibly match your query.</p>
+<h2 id="how-the-r-tree-is-constructed">How the R-tree is Constructed<a class="headerlink" href="#how-the-r-tree-is-constructed" title="Permanent link">&para;</a></h2>
+<h3 id="hierarchical-bounding-boxes">Hierarchical Bounding Boxes<a class="headerlink" href="#hierarchical-bounding-boxes" title="Permanent link">&para;</a></h3>
+<p>The R-tree organizes spatial data into levels of nested bounding boxes:</p>
+<ul>
+<li><strong>Level 3 (Root)</strong>: One large bounding box covering the entire dataset (e.g., entire city)</li>
+<li><strong>Level 2</strong>: A few boxes covering major regions (e.g., neighborhoods)</li>
+<li><strong>Level 1</strong>: Many boxes covering smaller areas (e.g., city blocks)</li>
+<li><strong>Level 0 (Leaves)</strong>: Individual bounding boxes for each feature (e.g., buildings)</li>
+</ul>
+<p>The tree structure:</p>
+<pre><code>Level 3 (Root): One large box covering entire city
+    │
+    ├─→ Level 2: Neighborhood box 1
+    │       │
+    │       ├─→ Level 1: City block box 1
+    │       │       │
+    │       │       └─→ Level 0 (Leaves): Building 1, Building 2, Building 3...
+    │       │
+    │       └─→ Level 1: City block box 2
+    │               │
+    │               └─→ Level 0 (Leaves): Building 10, Building 11...
+    │
+    └─→ Level 2: Neighborhood box 2
+            │
+            ├─→ Level 1: City block box 3
+            │       │
+            │       └─→ Level 0 (Leaves): Building 20, Building 21...
+            │
+            └─→ Level 1: City block box 4
+</code></pre>
+<h3 id="what-each-node-contains">What Each Node Contains<a class="headerlink" href="#what-each-node-contains" title="Permanent link">&para;</a></h3>
+<p><strong>Higher levels (internal nodes):</strong></p>
+<pre><code>Node = {
+  bounding_box: {min_x, min_y, max_x, max_y},  // 4 numbers
+  children: [pointer_to_child_1, pointer_to_child_2, ...]
+}
+</code></pre>
+<p><strong>Level 0 (leaf nodes):</strong></p>
+<pre><code>Leaf = {
+  bounding_box: {min_x, min_y, max_x, max_y},  // 4 numbers
+  feature_reference: byte_offset_or_id  // where actual geometry is stored
+}
+</code></pre>
+<h3 id="important-property-boxes-can-overlap">Important Property: Boxes Can Overlap<a class="headerlink" href="#important-property-boxes-can-overlap" title="Permanent link">&para;</a></h3>
+<p>Unlike B-trees where ranges are strictly separated, <strong>R-tree boxes at the same level can overlap</strong>:</p>
+<pre><code>┌─────────────┐
+│  Box A      │
+│   ┌─────────┼─────┐
+│   │ Overlap │     │
+└───┼─────────┘     │
+    │    Box B      │
+    └───────────────┘
+</code></pre>
+<p><strong>Why?</strong> Spatial objects don't naturally partition into non-overlapping regions. A building on a corner might be near features in two different areas, so both boxes might include it.</p>
+<p>This means a query might explore multiple branches, but you still prune away boxes that don't overlap your query area.</p>
+<h2 id="why-the-index-is-compact">Why the Index is Compact<a class="headerlink" href="#why-the-index-is-compact" title="Permanent link">&para;</a></h2>
+<p>The index is much smaller than the actual geometry data because it only stores <strong>simple rectangles</strong>.</p>
+<p><strong>Index storage:</strong>
+- Rectangle = 4 floating-point numbers (min_x, min_y, max_x, max_y)
+- Typically ~32 bytes per box (including pointers)</p>
+<p><strong>Geometry storage:</strong>
+- Complex polygon with 100 vertices = ~800 bytes just for coordinates
+- Plus attribute data, topology, etc.</p>
+<p><strong>Example for 1 million buildings:</strong></p>
+<p>R-tree index:
+- Level 0: ~10,000 leaf boxes × 32 bytes = 320 KB
+- Level 1: ~100 boxes × 32 bytes = 3.2 KB
+- Level 2: ~10 boxes × 32 bytes = 320 bytes
+- <strong>Total: ~325 KB</strong></p>
+<p>Actual geometry:
+- 1 million complex polygons × ~1 KB average = ~1 GB</p>
+<p><strong>Result:</strong> Index is ~0.03% of data size in this example. The storage overhead is small because the index only contains simple rectangles rather than complex geometries.</p>
+<h2 id="how-spatial-search-works">How Spatial Search Works<a class="headerlink" href="#how-spatial-search-works" title="Permanent link">&para;</a></h2>
+<h3 id="search-algorithm">Search Algorithm<a class="headerlink" href="#search-algorithm" title="Permanent link">&para;</a></h3>
+<p>When you query "find features in this bounding box [x1, y1, x2, y2]":</p>
+<pre><code>1. Start at root level
+2. For each child box:
+   - Check if child's bounding box overlaps query box
+   - If YES: recursively search that child
+   - If NO: skip entire branch (pruning!)
+3. At level 0, collect all matching features
+4. Fetch actual geometry and do precise intersection test
+</code></pre>
+<h3 id="example-search">Example Search<a class="headerlink" href="#example-search" title="Permanent link">&para;</a></h3>
+<p><strong>Query:</strong> "Buildings in downtown area [13.40, 52.51, 13.41, 52.52]"</p>
+<pre><code>Level 3 (Root):
+  ├─ North District [13.30-13.50, 52.55-52.60]
+  │  Does [13.30-13.50, 52.55-52.60] overlap [13.40-13.41, 52.51-52.52]?
+  │  → NO (query is south of this box)
+  │  → Skip entire North District
+  │
+  └─ South District [13.35-13.45, 52.48-52.53]
+     Does [13.35-13.45, 52.48-52.53] overlap [13.40-13.41, 52.51-52.52]?
+     → YES, explore children
+
+Level 2 (within South District):
+  ├─ Downtown [13.38-13.42, 52.50-52.52]
+  │  → YES, explore children
+  │
+  └─ Suburbs [13.40-13.45, 52.48-52.49]
+     → NO (query is north of this box)
+     → Skip entire Suburbs
+
+Level 1 (within Downtown):
+  ├─ Block A [13.39-13.40, 52.51-52.52]
+  │  → YES, explore
+  │
+  └─ Block B [13.41-13.42, 52.50-52.51]
+     → Partial overlap, explore
+
+Level 0:
+  Get byte offsets for buildings in Block A and Block B
+  Fetch actual geometries
+  Do precise intersection tests
+</code></pre>
+<p><strong>Result:</strong> Checked maybe 100 boxes instead of 1 million features. Pruned entire branches (North District, Suburbs) without looking at any individual buildings there.</p>
+<h2 id="flatgeobuf-streaming-with-spatial-index">FlatGeobuf Streaming with Spatial Index<a class="headerlink" href="#flatgeobuf-streaming-with-spatial-index" title="Permanent link">&para;</a></h2>
+<p>FlatGeobuf demonstrates the power of spatial indexing for cloud-based data:</p>
+<h3 id="file-structure">File Structure<a class="headerlink" href="#file-structure" title="Permanent link">&para;</a></h3>
+<pre><code>FlatGeobuf file:
+┌─────────────────────┐
+│ Header              │ ← Metadata about file
+├─────────────────────┤
+│ R-tree Index        │ ← ENTIRE spatial index
+│ (all levels)        │   (compact due to simple rectangles)
+├─────────────────────┤
+│ Feature 1           │ ← Actual geometry data
+│ Feature 2           │   (much larger, complex geometries)
+│ Feature 3           │
+│ ...                 │
+└─────────────────────┘
+</code></pre>
+<h3 id="streaming-workflow">Streaming Workflow<a class="headerlink" href="#streaming-workflow" title="Permanent link">&para;</a></h3>
+<p><strong>User pans map to show a specific area:</strong></p>
+<pre><code>1. First request: Fetch header + entire R-tree index
+   GET bytes 0-50000
+   → Loads complete index into memory (one round-trip)
+
+2. Query index in memory for bbox [x1, y1, x2, y2]
+   → Traverse tree (instant, no network)
+   → Result: &quot;Features at byte ranges [500000-510000, 800000-805000]&quot;
+
+3. Fetch only relevant features
+   GET bytes 500000-510000, 800000-805000
+   → Downloads only matching features
+
+4. Render features on map
+
+User pans to different area:
+   → Skip step 1 (already have index!)
+   → Query index for new bbox
+   → Fetch new byte ranges
+</code></pre>
+<p><strong>Why this is efficient:</strong>
+- <strong>Index fetch</strong>: One-time cost (small due to compact rectangles)
+- <strong>Data fetch</strong>: Only what you need
+- <strong>No server processing</strong>: Client does all spatial filtering</p>
+<p>This is why FlatGeobuf is called a "cloud-native" format - you can work with massive files without downloading them entirely or needing a database server.</p>
+<h2 id="trade-offs">Trade-offs<a class="headerlink" href="#trade-offs" title="Permanent link">&para;</a></h2>
+<h3 id="benefits">Benefits<a class="headerlink" href="#benefits" title="Permanent link">&para;</a></h3>
+<p><strong>Query speed:</strong>
+- Spatial queries are orders of magnitude faster
+- Essential for large datasets (millions+ features)
+- Enables interactive applications (web maps, real-time queries)</p>
+<p><strong>Cloud efficiency:</strong>
+- Stream only needed data over network
+- No server-side processing required</p>
+<h3 id="costs">Costs<a class="headerlink" href="#costs" title="Permanent link">&para;</a></h3>
+<p><strong>Storage:</strong>
+- Index adds overhead to file size
+- Usually small relative to total data (as shown in example above)</p>
+<p><strong>Build time:</strong>
+- Creating index takes time (one-time cost)
+- Must rebuild if data changes significantly</p>
+<p><strong>Update complexity:</strong>
+- Inserting/updating features requires updating index
+- Can be expensive for columnar formats
+- Row-based databases (PostGIS) handle this efficiently</p>
+<h2 id="when-spatial-indexes-matter">When Spatial Indexes Matter<a class="headerlink" href="#when-spatial-indexes-matter" title="Permanent link">&para;</a></h2>
+<h3 id="essential-for">Essential for:<a class="headerlink" href="#essential-for" title="Permanent link">&para;</a></h3>
+<p><strong>Large datasets:</strong>
+- Millions+ features where full scans are prohibitively slow
+- Interactive applications requiring subsecond response</p>
+<p><strong>Spatial queries:</strong>
+- "Features within area" (bounding box queries)
+- "Features near point" (radius queries)
+- "Features intersecting geometry" (overlap queries)</p>
+<p><strong>Streaming/cloud scenarios:</strong>
+- Serving map tiles
+- Progressive loading of data
+- Working with remote files without full download</p>
+<h3 id="less-important-for">Less important for:<a class="headerlink" href="#less-important-for" title="Permanent link">&para;</a></h3>
+<p><strong>Small datasets:</strong>
+- Few thousand features where full scan is fast enough
+- Simple analytical queries on all data</p>
+<p><strong>Non-spatial queries:</strong>
+- "All buildings with area &gt; 1000m²" (attribute filtering)
+- Columnar formats (GeoParquet) may be better for pure analytics</p>
+<p><strong>Write-heavy workloads:</strong>
+- If constantly inserting/updating, index maintenance overhead may dominate
+- Consider batch updates and index rebuilds</p>
+<h2 id="spatial-index-types">Spatial Index Types<a class="headerlink" href="#spatial-index-types" title="Permanent link">&para;</a></h2>
+<p>While R-tree is most common, other types exist:</p>
+<p><strong>R-tree variants:</strong>
+- <strong>R-tree</strong>: Original, used in PostGIS, FlatGeobuf
+- <strong>R*-tree</strong>: Optimized splitting strategy (better performance)
+- <strong>R+ tree</strong>: Non-overlapping boxes (more complex)</p>
+<p><strong>Grid-based:</strong>
+- <strong>Quadtree</strong>: Recursively divide space into quarters
+- <strong>Geohash</strong>: Encode location as string for lexicographic sorting</p>
+<p><strong>Space-filling curves:</strong>
+- <strong>Hilbert curve</strong>: Map 2D space to 1D while preserving locality
+- <strong>Z-order curve</strong>: Similar concept, simpler implementation</p>
+<p>R-tree is most common because it:
+- Adapts to data distribution (not fixed grid)
+- Handles varying feature densities well
+- Works for any geometry type</p>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Spatial indexes organize data by location</strong> - Not by attribute values</li>
+<li><strong>R-tree uses hierarchical bounding boxes</strong> - Group nearby features together</li>
+<li><strong>Pruning is the key insight</strong> - Skip entire branches that can't match</li>
+<li><strong>Index is compact</strong> - Only stores simple rectangles (4 numbers each)</li>
+<li><strong>Enables streaming</strong> - Know exactly which bytes to fetch</li>
+<li><strong>Essential for large datasets</strong> - Makes million-feature queries practical</li>
+<li><strong>Trade-off: build time vs query speed</strong> - One-time cost for massive speedup</li>
+</ol>
+<h2 id="related-topics">Related Topics<a class="headerlink" href="#related-topics" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../file-formats/flatgeobuf/">FlatGeobuf</a> - File format with built-in R-tree index</li>
+<li><a href="../../file-formats/geoparquet/">GeoParquet</a> - Columnar format (less spatial indexing, better analytics)</li>
+<li><a href="../row-vs-columnar/">Row-Based vs Columnar Storage</a> - Why FlatGeobuf uses row-based storage</li>
+<li><a href="../../file-formats/">File Formats Overview</a> - Which formats support spatial indexing</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/R-tree">R-tree Wikipedia</a></li>
+<li><a href="https://postgis.net/workshops/postgis-intro/indexing.html">PostGIS Indexing</a></li>
+<li><a href="http://flatgeobuf.org/">FlatGeobuf Specification</a></li>
+</ul>
+<!-- Reference-style links -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1124 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>GeoParquet - geographic-databases</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#geoparquet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="geographic-databases" class="md-header__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            geographic-databases
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GeoParquet
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="geographic-databases" class="md-nav__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    geographic-databases
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-geoparquet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is GeoParquet?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parquet-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parquet Organization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#geometry-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Geometry Encoding
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Geometry Encoding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encoding-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encoding Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#geoparquet-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GeoParquet Metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-analytics-are-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Analytics are Fast
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why Analytics are Fast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#read-only-what-you-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read Only What You Need
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#predicate-pushdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predicate Pushdown
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#geometry-specific-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Geometry-Specific Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#geometry-column-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Geometry Column Compression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attribute-column-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attribute Column Compression
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-updates-are-slow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Updates are Slow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why Updates are Slow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#geoparquet-specific-implications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GeoParquet-Specific Implications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-native-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cloud-Native Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud-Native Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-cloud-reading-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Cloud Reading Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tools-with-cloud-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools with Cloud Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partitioning-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partitioning Strategies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partitioning Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spatial-partitioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spatial Partitioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temporal-partitioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Temporal Partitioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tooling-ecosystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tooling Ecosystem
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tooling Ecosystem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#readingwriting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading/Writing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#converting-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting Formats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-geoparquet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use GeoParquet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When to Use GeoParquet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ideal-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ideal for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-ideal-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not ideal for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Topics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="geoparquet">GeoParquet<a class="headerlink" href="#geoparquet" title="Permanent link">&para;</a></h1>
+<p>GeoParquet is a columnar storage format specifically designed for geospatial data, combining Apache Parquet's analytical performance with standardized geospatial metadata.</p>
+<h2 id="what-is-geoparquet">What is GeoParquet?<a class="headerlink" href="#what-is-geoparquet" title="Permanent link">&para;</a></h2>
+<p>GeoParquet extends the <a href="https://parquet.apache.org/">Apache Parquet</a> format by adding:
+- Standardized metadata for geometry columns (encoding, CRS, bbox)
+- Conventions for storing spatial data types
+- Interoperability across geospatial tools</p>
+<p><strong>Built on Parquet's strengths:</strong>
+- Columnar storage (see <a href="../../concepts/row-vs-columnar/">Row-Based vs Columnar Storage</a>)
+- Excellent compression
+- Cloud-optimized access patterns
+- Native support in data science tools</p>
+<h2 id="file-structure">File Structure<a class="headerlink" href="#file-structure" title="Permanent link">&para;</a></h2>
+<h3 id="parquet-organization">Parquet Organization<a class="headerlink" href="#parquet-organization" title="Permanent link">&para;</a></h3>
+<p>A GeoParquet file is organized into <strong>row groups</strong> and <strong>columns</strong>:</p>
+<pre><code>GeoParquet File
+├─ Row Group 1 (e.g., 10,000 features)
+│  ├─ id column: [1, 2, 3, ..., 10000]
+│  ├─ name column: [&quot;Building A&quot;, &quot;Building B&quot;, ...]
+│  ├─ area column: [150.5, 220.3, ...]
+│  └─ geometry column: [POLYGON(...), POLYGON(...), ...]
+│
+├─ Row Group 2 (next 10,000 features)
+│  ├─ id column: [10001, 10002, ...]
+│  └─ ...
+│
+└─ Footer Metadata
+   ├─ Schema
+   ├─ Row group statistics (min/max values per column)
+   └─ GeoParquet metadata (CRS, bbox, encoding)
+</code></pre>
+<p><strong>Row groups</strong> are the key unit:
+- Typical size: 64MB - 128MB of uncompressed data
+- Each row group is independently readable
+- Contains column chunks for all columns
+- Stores statistics (min/max values) for each column</p>
+<p><strong>Why row groups matter:</strong>
+When you query data, Parquet can skip entire row groups based on statistics without reading them. For example, querying "area &gt; 1000" can skip any row group where max(area) &lt; 1000.</p>
+<h2 id="geometry-encoding">Geometry Encoding<a class="headerlink" href="#geometry-encoding" title="Permanent link">&para;</a></h2>
+<p>The GeoParquet specification defines how geometry is stored in the geometry column.</p>
+<h3 id="encoding-format">Encoding Format<a class="headerlink" href="#encoding-format" title="Permanent link">&para;</a></h3>
+<p>Geometries are typically encoded as <strong>Well-Known Binary (WKB)</strong>:</p>
+<pre><code>geometry column: [
+  &lt;WKB bytes for POLYGON(...)&gt;,
+  &lt;WKB bytes for POINT(...)&gt;,
+  &lt;WKB bytes for LINESTRING(...)&gt;,
+  ...
+]
+</code></pre>
+<p><strong>Why WKB:</strong>
+- Compact binary format
+- Standard representation (ISO 19125)
+- Preserves geometry type and coordinates exactly
+- Efficient to parse</p>
+<h3 id="geoparquet-metadata">GeoParquet Metadata<a class="headerlink" href="#geoparquet-metadata" title="Permanent link">&para;</a></h3>
+<p>The file footer includes GeoParquet-specific metadata:</p>
+<pre><code class="language-json">{
+  &quot;geo&quot;: {
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;primary_column&quot;: &quot;geometry&quot;,
+    &quot;columns&quot;: {
+      &quot;geometry&quot;: {
+        &quot;encoding&quot;: &quot;WKB&quot;,
+        &quot;geometry_types&quot;: [&quot;Polygon&quot;, &quot;MultiPolygon&quot;],
+        &quot;crs&quot;: {
+          &quot;id&quot;: {
+            &quot;authority&quot;: &quot;EPSG&quot;,
+            &quot;code&quot;: 4326
+          }
+        },
+        &quot;bbox&quot;: [-180.0, -90.0, 180.0, 90.0]
+      }
+    }
+  }
+}
+</code></pre>
+<p><strong>Key metadata:</strong>
+- <strong>encoding</strong>: How geometries are stored (typically WKB)
+- <strong>geometry_types</strong>: Which types are present (for validation)
+- <strong>crs</strong>: Coordinate Reference System
+- <strong>bbox</strong>: Overall bounding box of all geometries</p>
+<h2 id="why-analytics-are-fast">Why Analytics are Fast<a class="headerlink" href="#why-analytics-are-fast" title="Permanent link">&para;</a></h2>
+<p>GeoParquet inherits columnar storage benefits (detailed in <a href="../../concepts/row-vs-columnar/">Row-Based vs Columnar Storage</a>). Key points specific to geospatial:</p>
+<h3 id="read-only-what-you-need">Read Only What You Need<a class="headerlink" href="#read-only-what-you-need" title="Permanent link">&para;</a></h3>
+<p>Analytical query: "What is the average building area by city?"</p>
+<pre><code>Query needs: city column + area column
+Don't need: geometry column, name column, etc.
+
+Result: Read only 2 columns instead of all columns
+</code></pre>
+<p>This is the fundamental columnar advantage explained in <a href="../../concepts/row-vs-columnar/#when-columnar-is-faster-analytical-queries">Row-Based vs Columnar - Analytical Queries</a>.</p>
+<h3 id="predicate-pushdown">Predicate Pushdown<a class="headerlink" href="#predicate-pushdown" title="Permanent link">&para;</a></h3>
+<p>Parquet stores <strong>min/max statistics</strong> for each column in each row group:</p>
+<pre><code>Row Group 1:
+  area column: min=50.0, max=500.0
+
+Row Group 2:
+  area column: min=600.0, max=2000.0
+</code></pre>
+<p>Query: "Find buildings with area &gt; 1000"</p>
+<pre><code>Row Group 1: max=500.0 &lt; 1000 → Skip entirely ✂️
+Row Group 2: max=2000.0 &gt;= 1000 → Read and filter ✓
+</code></pre>
+<p><strong>This works over cloud storage:</strong> Tools can read just the footer metadata, determine which row groups to read, then fetch only those byte ranges via HTTP.</p>
+<h3 id="geometry-specific-considerations">Geometry-Specific Considerations<a class="headerlink" href="#geometry-specific-considerations" title="Permanent link">&para;</a></h3>
+<p><strong>Bounding box filtering:</strong>
+The file metadata includes an overall bbox. Applications can:
+1. Check file bbox before downloading
+2. Skip files that don't overlap query area
+3. Read only files with spatial overlap</p>
+<p><strong>Limitation:</strong> Unlike <a href="../flatgeobuf/">FlatGeobuf's R-tree</a>, GeoParquet doesn't have built-in spatial indexing within the file. For spatial filtering:
+- Load into database (DuckDB, PostgreSQL) and create spatial index
+- Or rely on partition strategies (separate files by region)</p>
+<h2 id="compression">Compression<a class="headerlink" href="#compression" title="Permanent link">&para;</a></h2>
+<p>GeoParquet achieves excellent compression through columnar organization. See <a href="../../concepts/row-vs-columnar/#compression">Row-Based vs Columnar - Compression</a> for the general principle.</p>
+<h3 id="geometry-column-compression">Geometry Column Compression<a class="headerlink" href="#geometry-column-compression" title="Permanent link">&para;</a></h3>
+<p>Geometry columns (WKB bytes) are compressed like any binary column:</p>
+<pre><code>Raw WKB: [&lt;polygon1 bytes&gt;, &lt;polygon2 bytes&gt;, ...]
+    ↓
+Dictionary encoding (if many identical geometries)
+    ↓
+Compression codec (Snappy, GZIP, ZSTD, etc.)
+</code></pre>
+<p><strong>Compression codecs:</strong>
+- <strong>Snappy</strong>: Fast compression/decompression, moderate ratio
+- <strong>GZIP</strong>: Better compression, slower
+- <strong>ZSTD</strong>: Best balance (fast + good compression)
+- <strong>LZ4</strong>: Fastest, lower compression</p>
+<h3 id="attribute-column-compression">Attribute Column Compression<a class="headerlink" href="#attribute-column-compression" title="Permanent link">&para;</a></h3>
+<p>Attribute columns compress extremely well:</p>
+<p><strong>Example: Country column in city dataset</strong></p>
+<p>See <a href="../../concepts/row-vs-columnar/#compression">Row-Based vs Columnar - Compression</a> for the dictionary encoding explanation. For geospatial data, repeated values are common:
+- Country names (few unique values)
+- Feature types ("residential", "commercial")
+- Administrative regions</p>
+<h2 id="why-updates-are-slow">Why Updates are Slow<a class="headerlink" href="#why-updates-are-slow" title="Permanent link">&para;</a></h2>
+<p>GeoParquet is <strong>immutable by design</strong>. See <a href="../../concepts/row-vs-columnar/#updates">Row-Based vs Columnar - Updates</a> for the fundamental reason.</p>
+<h3 id="geoparquet-specific-implications">GeoParquet-Specific Implications<a class="headerlink" href="#geoparquet-specific-implications" title="Permanent link">&para;</a></h3>
+<p><strong>Adding one feature:</strong></p>
+<pre><code>Cannot: Append to geometry column file
+Reason: Columns are compressed, row groups are sealed
+
+Must:
+1. Read entire file
+2. Add new feature to in-memory representation
+3. Write new file with updated row groups
+4. Replace old file
+</code></pre>
+<p><strong>Updating attribute:</strong></p>
+<pre><code>Cannot: Modify single value in compressed column
+Must: Rewrite affected row group(s) or entire file
+</code></pre>
+<p><strong>Result:</strong> GeoParquet is for "write once, read many" workflows.</p>
+<h3 id="practical-workflow">Practical Workflow<a class="headerlink" href="#practical-workflow" title="Permanent link">&para;</a></h3>
+<p>For live data:</p>
+<pre><code>Live updates → PostgreSQL + PostGIS (row-based database)
+      ↓ (periodic export: nightly, weekly)
+GeoParquet in data lake
+      ↓
+Analytics, dashboards, reports
+</code></pre>
+<h2 id="cloud-native-features">Cloud-Native Features<a class="headerlink" href="#cloud-native-features" title="Permanent link">&para;</a></h2>
+<p>GeoParquet is designed for cloud storage (S3, Azure Blob, GCS).</p>
+<h3 id="how-cloud-reading-works">How Cloud Reading Works<a class="headerlink" href="#how-cloud-reading-works" title="Permanent link">&para;</a></h3>
+<p><strong>Traditional approach (bad):</strong></p>
+<pre><code>1. Download entire 5GB file from S3
+2. Load into memory
+3. Query for small subset
+Result: Wasted bandwidth and time
+</code></pre>
+<p><strong>GeoParquet approach (good):</strong></p>
+<pre><code>1. HTTP GET footer metadata (~KB)
+   → Read schema, row group statistics
+
+2. Determine relevant row groups
+   Query &quot;area &gt; 1000&quot; → Only row groups with max(area) &gt;= 1000
+
+3. HTTP range requests for specific row groups
+   GET bytes 1000000-2000000 (row group 5)
+   GET bytes 5000000-6000000 (row group 12)
+
+4. Read only needed columns from those row groups
+
+Result: Download &lt;1% of file
+</code></pre>
+<p><strong>Why this works:</strong>
+- Footer at end of file (small, one request)
+- Row groups are contiguous byte ranges
+- HTTP supports range requests
+- Column chunks within row group also contiguous</p>
+<h3 id="tools-with-cloud-support">Tools with Cloud Support<a class="headerlink" href="#tools-with-cloud-support" title="Permanent link">&para;</a></h3>
+<p><strong>DuckDB:</strong></p>
+<pre><code class="language-sql">-- Query directly from S3, no download
+SELECT city, AVG(area)
+FROM read_parquet('s3://bucket/buildings.parquet')
+WHERE area &gt; 1000
+GROUP BY city;
+</code></pre>
+<p>DuckDB reads only needed row groups and columns over HTTP.</p>
+<p><strong>GeoPandas with PyArrow:</strong></p>
+<pre><code class="language-python">import geopandas as gpd
+
+# Reads only needed data from cloud
+gdf = gpd.read_parquet(
+    's3://bucket/buildings.parquet',
+    filters=[('area', '&gt;', 1000)]
+)
+</code></pre>
+<h2 id="partitioning-strategies">Partitioning Strategies<a class="headerlink" href="#partitioning-strategies" title="Permanent link">&para;</a></h2>
+<p>For very large datasets, partition GeoParquet files:</p>
+<h3 id="spatial-partitioning">Spatial Partitioning<a class="headerlink" href="#spatial-partitioning" title="Permanent link">&para;</a></h3>
+<pre><code>data/
+  ├── country=USA/
+  │   ├── state=CA/
+  │   │   └── buildings.parquet
+  │   └── state=NY/
+  │       └── buildings.parquet
+  └── country=UK/
+      └── buildings.parquet
+</code></pre>
+<p><strong>Benefits:</strong>
+- Skip entire partitions based on query
+- Better parallelization
+- Easier data management</p>
+<h3 id="temporal-partitioning">Temporal Partitioning<a class="headerlink" href="#temporal-partitioning" title="Permanent link">&para;</a></h3>
+<pre><code>data/
+  ├── year=2023/
+  │   ├── month=01/
+  │   │   └── events.parquet
+  │   └── month=02/
+  │       └── events.parquet
+  └── year=2024/
+</code></pre>
+<p><strong>Useful for:</strong> Time-series geospatial data (sensor readings, GPS tracks)</p>
+<h2 id="tooling-ecosystem">Tooling Ecosystem<a class="headerlink" href="#tooling-ecosystem" title="Permanent link">&para;</a></h2>
+<h3 id="readingwriting">Reading/Writing<a class="headerlink" href="#readingwriting" title="Permanent link">&para;</a></h3>
+<p><strong>Python:</strong></p>
+<pre><code class="language-python">import geopandas as gpd
+
+# Read
+gdf = gpd.read_parquet('data.parquet')
+
+# Write
+gdf.to_parquet('output.parquet', compression='zstd')
+</code></pre>
+<p><strong>DuckDB:</strong></p>
+<pre><code class="language-sql">-- Load spatial extension
+LOAD spatial;
+
+-- Read GeoParquet
+SELECT * FROM read_parquet('data.parquet');
+
+-- Create spatial index after loading for spatial queries
+CREATE INDEX idx_geom ON buildings USING RTREE (geometry);
+</code></pre>
+<p><strong>R (sf package):</strong></p>
+<pre><code class="language-r">library(sf)
+
+# Read
+data &lt;- st_read(&quot;data.parquet&quot;)
+
+# Write
+st_write(data, &quot;output.parquet&quot;)
+</code></pre>
+<h3 id="converting-formats">Converting Formats<a class="headerlink" href="#converting-formats" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Using ogr2ogr (GDAL)
+ogr2ogr -f Parquet output.parquet input.gpkg
+ogr2ogr -f Parquet output.parquet input.shp
+</code></pre>
+<h2 id="when-to-use-geoparquet">When to Use GeoParquet<a class="headerlink" href="#when-to-use-geoparquet" title="Permanent link">&para;</a></h2>
+<h3 id="ideal-for">Ideal for:<a class="headerlink" href="#ideal-for" title="Permanent link">&para;</a></h3>
+<p><strong>Analytical workloads:</strong>
+- Aggregations across millions of features
+- Filtering by attributes
+- Statistical analysis
+- Data science pipelines</p>
+<p><strong>Cloud-based workflows:</strong>
+- Data lakes (S3, Azure, GCS)
+- Serverless computing
+- Distributed processing (Spark, Dask)</p>
+<p><strong>Read-heavy access:</strong>
+- Datasets that rarely change
+- Historical/archival data
+- Reference datasets</p>
+<p><strong>Large datasets:</strong>
+- Millions to billions of features
+- Where file size matters
+- Bandwidth-constrained scenarios</p>
+<h3 id="not-ideal-for">Not ideal for:<a class="headerlink" href="#not-ideal-for" title="Permanent link">&para;</a></h3>
+<p><strong>Frequent updates:</strong>
+- Real-time data collection
+- Transactional workloads
+- Continuous inserts/updates
+→ Use <a href="../../databases/postgresql-postgis/">PostgreSQL + PostGIS</a> instead</p>
+<p><strong>Spatial-heavy queries:</strong>
+- "All features in this bounding box" as primary query
+- Interactive map panning/zooming
+→ Use <a href="../flatgeobuf/">FlatGeobuf</a> with spatial index</p>
+<p><strong>Small datasets:</strong>
+- Few thousand features
+- Where simplicity matters more than performance
+→ Use <a href="../geojson/">GeoJSON</a> or <a href="../geopackage/">GeoPackage</a></p>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Columnar storage</strong> optimized for analytics (see <a href="../../concepts/row-vs-columnar/">Row-Based vs Columnar</a>)</li>
+<li><strong>Cloud-native</strong> - query without full download via predicate pushdown</li>
+<li><strong>Excellent compression</strong> - especially for repeated attribute values</li>
+<li><strong>Immutable</strong> - write once, read many (updates require rewrite)</li>
+<li><strong>No built-in spatial index</strong> - good for analytics, less optimal for spatial filtering</li>
+<li><strong>Standard format</strong> - works across Python, R, DuckDB, Spark, etc.</li>
+</ol>
+<h2 id="related-topics">Related Topics<a class="headerlink" href="#related-topics" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../concepts/row-vs-columnar/">Row-Based vs Columnar Storage</a> - Fundamental concepts</li>
+<li><a href="../flatgeobuf/">FlatGeobuf</a> - Row-based with spatial index (better for spatial queries)</li>
+<li><a href="../geopackage/">GeoPackage</a> - Row-based SQLite format (better for updates)</li>
+<li><a href="../">File Formats Overview</a> - Compare all formats</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://geoparquet.org/">GeoParquet Specification</a></li>
+<li><a href="https://parquet.apache.org/docs/">Apache Parquet Documentation</a></li>
+<li><a href="https://cloudnativegeo.org/">Cloud-Native Geospatial</a></li>
+<li><a href="https://duckdb.org/docs/extensions/spatial.html">DuckDB Spatial Extension</a></li>
+</ul>
+<!-- Reference-style links -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

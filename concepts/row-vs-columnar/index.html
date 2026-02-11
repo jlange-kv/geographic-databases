@@ -1,0 +1,952 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Row-Based vs Columnar Storage - geographic-databases</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#row-based-vs-columnar-storage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="geographic-databases" class="md-header__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            geographic-databases
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Row-Based vs Columnar Storage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="geographic-databases" class="md-nav__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    geographic-databases
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file-formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-core-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Core Difference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Core Difference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#row-based-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Row-Based Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#columnar-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Columnar Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Matters
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why This Matters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-row-based-is-faster-getting-complete-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Row-Based is Faster: Getting Complete Records
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-columnar-is-faster-analytical-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Columnar is Faster: Analytical Queries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writing-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-each" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use Each
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When to Use Each">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-row-based-storage-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Row-Based Storage When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-columnar-storage-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Columnar Storage When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#real-world-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real-World Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Real-World Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-1-hybrid-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 1: Hybrid Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-2-format-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 2: Format Conversion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Topics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="row-based-vs-columnar-storage">Row-Based vs Columnar Storage<a class="headerlink" href="#row-based-vs-columnar-storage" title="Permanent link">&para;</a></h1>
+<p>Understanding how data is physically organized on disk is fundamental to choosing the right storage format.</p>
+<h2 id="the-core-difference">The Core Difference<a class="headerlink" href="#the-core-difference" title="Permanent link">&para;</a></h2>
+<h3 id="row-based-storage">Row-Based Storage<a class="headerlink" href="#row-based-storage" title="Permanent link">&para;</a></h3>
+<p>Data is stored <strong>feature-by-feature</strong> (row-by-row):</p>
+<pre><code>Imagine a table of cities:
+┌────┬────────┬─────────┬────────────┬──────────────────┐
+│ id │  name  │ country │ population │     geometry     │
+├────┼────────┼─────────┼────────────┼──────────────────┤
+│ 1  │ Paris  │ France  │ 2,161,000  │ POINT(2.35 48.86)│
+│ 2  │ London │ UK      │ 8,982,000  │ POINT(-0.12 51.5)│
+│ 3  │ Berlin │ Germany │ 3,645,000  │ POINT(13.4 52.5) │
+└────┴────────┴─────────┴────────────┴──────────────────┘
+
+On disk (row-based):
+Block 1: [1|Paris|France|2161000|POINT(...)]
+Block 2: [2|London|UK|8982000|POINT(...)]
+Block 3: [3|Berlin|Germany|3645000|POINT(...)]
+</code></pre>
+<p>Each disk block contains <strong>all attributes</strong> for one feature.</p>
+<h3 id="columnar-storage">Columnar Storage<a class="headerlink" href="#columnar-storage" title="Permanent link">&para;</a></h3>
+<p>Data is stored <strong>attribute-by-attribute</strong> (column-by-column):</p>
+<pre><code>Same table, different organization:
+
+On disk (columnar):
+Block 1 (id):         [1|2|3]
+Block 2 (name):       [Paris|London|Berlin]
+Block 3 (country):    [France|UK|Germany]
+Block 4 (population): [2161000|8982000|3645000]
+Block 5 (geometry):   [POINT(...)|POINT(...)|POINT(...)]
+</code></pre>
+<p>Each disk block contains <strong>one attribute</strong> for all features.</p>
+<h2 id="why-this-matters">Why This Matters<a class="headerlink" href="#why-this-matters" title="Permanent link">&para;</a></h2>
+<p>The storage layout dramatically affects performance for different operations.</p>
+<h3 id="when-row-based-is-faster-getting-complete-records">When Row-Based is Faster: Getting Complete Records<a class="headerlink" href="#when-row-based-is-faster-getting-complete-records" title="Permanent link">&para;</a></h3>
+<p><strong>Query: "Get all information about Paris"</strong></p>
+<p><strong>Row-based approach:</strong></p>
+<pre><code>1. Use index to find: name = &quot;Paris&quot; → Block 1
+2. Read Block 1: [1|Paris|France|2161000|POINT(...)]
+3. Return all attributes
+
+Blocks read: 1
+Result: Fast
+</code></pre>
+<p><strong>Columnar approach:</strong></p>
+<pre><code>1. Scan name column to find &quot;Paris&quot; → position 1
+2. Read from id column, position 1 → 1
+3. Read from name column, position 1 → &quot;Paris&quot;
+4. Read from country column, position 1 → &quot;France&quot;
+5. Read from population column, position 1 → 2161000
+6. Read from geometry column, position 1 → POINT(...)
+
+Blocks read: 5 (one per column)
+Result: Slower
+</code></pre>
+<p><strong>The principle:</strong> When you need <strong>all attributes</strong> for specific records, row-based storage retrieves them in <strong>one block read</strong>. Columnar storage must read from <strong>every column</strong> separately.</p>
+<h3 id="when-columnar-is-faster-analytical-queries">When Columnar is Faster: Analytical Queries<a class="headerlink" href="#when-columnar-is-faster-analytical-queries" title="Permanent link">&para;</a></h3>
+<p><strong>Query: "What is the average population?"</strong></p>
+<p><strong>Row-based approach:</strong></p>
+<pre><code>1. Read Block 1: [1|Paris|France|2161000|POINT(...)]
+   → Extract: 2161000
+2. Read Block 2: [2|London|UK|8982000|POINT(...)]
+   → Extract: 8982000
+3. Read Block 3: [3|Berlin|Germany|3645000|POINT(...)]
+   → Extract: 3645000
+4. Calculate average
+
+Blocks read: ALL blocks (entire table)
+Wasted I/O: id, name, country, geometry (not needed!)
+</code></pre>
+<p><strong>Columnar approach:</strong></p>
+<pre><code>1. Read Block 4 (population): [2161000|8982000|3645000]
+2. Calculate average
+
+Blocks read: ONLY population block
+Wasted I/O: None
+</code></pre>
+<p><strong>The principle:</strong> Columnar storage lets you read <strong>only the columns you need</strong>. Row-based storage forces you to read <strong>entire rows</strong> even if you only want one attribute.</p>
+<p>For 1 million cities, columnar might read 1 block while row-based reads 1 million blocks.</p>
+<h3 id="writing-data">Writing Data<a class="headerlink" href="#writing-data" title="Permanent link">&para;</a></h3>
+<p><strong>Operation: Insert one new city</strong></p>
+<p><strong>Row-based approach:</strong></p>
+<pre><code>1. Create new row: [4|Madrid|Spain|3223000|POINT(...)]
+2. Append to end of file (or insert into B-tree)
+3. Update index with new entry
+
+Blocks modified: 1 (plus index update)
+Time: Fast (milliseconds)
+</code></pre>
+<p><strong>Columnar approach:</strong></p>
+<pre><code>1. Open id column → append 4 → close
+2. Open name column → append &quot;Madrid&quot; → close
+3. Open country column → append &quot;Spain&quot; → close
+4. Open population column → append 3223000 → close
+5. Open geometry column → append POINT(...) → close
+
+Blocks modified: 5 (one per column)
+Time: Slower (must touch every column)
+</code></pre>
+<p><strong>The principle:</strong> Row-based storage writes <strong>one block</strong> for one record. Columnar storage must modify <strong>every column</strong> for one record.</p>
+<p>This gets worse with compression (explained below).</p>
+<h3 id="compression">Compression<a class="headerlink" href="#compression" title="Permanent link">&para;</a></h3>
+<p>This is where columnar storage truly shines.</p>
+<p><strong>Why columnar compresses better:</strong></p>
+<p>Imagine a country column with many cities:</p>
+<p><strong>Row-based (mixed data in each block):</strong></p>
+<pre><code>Block 1: [1|Paris|France|2161000|POINT(...)]
+Block 2: [2|Lyon|France|513000|POINT(...)]
+Block 3: [3|London|UK|8982000|POINT(...)]
+...
+
+Compression challenge: Each block has mixed data types
+- Integer (id)
+- String (names - all different)
+- String (countries - repeated but scattered)
+- Integer (populations - all different)
+- Complex type (geometries - all different)
+
+Result: Difficult to find compression patterns
+</code></pre>
+<p><strong>Columnar (similar data together):</strong></p>
+<pre><code>Country column:
+[France|France|France|France|UK|UK|UK|Germany|Germany|Germany|...]
+
+Compression opportunity:
+    Original: [&quot;France&quot;, &quot;France&quot;, &quot;France&quot;, &quot;France&quot;, &quot;UK&quot;, &quot;UK&quot;, &quot;UK&quot;, ...]
+
+    Dictionary + encoding:
+    - Dictionary: {0: &quot;France&quot;, 1: &quot;UK&quot;, 2: &quot;Germany&quot;}
+    - Data: [0, 0, 0, 0, 1, 1, 1, 2, 2, 2, ...]
+
+    Further compression (run-length):
+    - [0×4, 1×3, 2×3, ...]
+
+Comparison:
+    [&quot;France&quot;×1000, &quot;UK&quot;×500, ...] vs Dictionary + [0×1000, 1×500, ...]
+
+    UTF-8 string &quot;France&quot; = ~6 bytes × 1000 = ~6000 bytes
+    Single byte 0 = 1 byte × 1000 = 1000 bytes + small dictionary
+    (Since &lt;255 countries exist, we can encode each with 1 byte)
+
+Result: Much smaller for large datasets. Roughly 83% compression in this case.
+</code></pre>
+<p><strong>The principle:</strong> Storing <strong>similar values together</strong> enables powerful compression techniques:
+- Dictionary encoding (replace repeated strings with small integers)
+- Run-length encoding (store value once, then "repeated N times")
+- Bit-packing (integers with limited range)</p>
+<p>Mixed data types in row-based storage can't exploit these patterns as effectively.</p>
+<h3 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h3>
+<p><strong>Operation: Change population of London from 8,982,000 to 9,000,000</strong></p>
+<p><strong>Row-based:</strong></p>
+<pre><code>1. Find row (using index): [2|London|UK|8982000|POINT(...)]
+2. Modify in place: [2|London|UK|9000000|POINT(...)]
+3. Update affected indexes
+
+Blocks modified: 1
+Time: Fast (milliseconds)
+</code></pre>
+<p><strong>Columnar:</strong></p>
+<pre><code>Option A: Modify in place
+1. Find position in population column (position 2)
+2. Decompress block containing position 2
+3. Change value: 8982000 → 9000000
+4. Recompress entire block
+5. Write back to disk
+
+Problem: If compressed with dictionary/run-length encoding,
+changing one value may require recompressing large chunks.
+
+Option B: Rewrite file (common in practice)
+1. Read entire file
+2. Modify value
+3. Write new file
+4. Replace old file
+
+Blocks modified: Potentially all blocks
+Time: Slow (seconds for large files)
+</code></pre>
+<p><strong>The principle:</strong> Row-based storage can modify <strong>one record</strong> easily. Columnar storage with compression makes single-record updates expensive, often requiring <strong>rewriting entire column blocks</strong>.</p>
+<p>This is why GeoParquet is effectively <strong>immutable</strong> in practice.</p>
+<h2 id="performance-summary">Performance Summary<a class="headerlink" href="#performance-summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Row-Based</th>
+<th>Columnar</th>
+<th>Winner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Read full record</strong></td>
+<td>Fast (1 block)</td>
+<td>Slow (N blocks for N columns)</td>
+<td>Row-based</td>
+</tr>
+<tr>
+<td><strong>Read one attribute across many records</strong></td>
+<td>Slow (read all, extract one)</td>
+<td>Fast (1 block)</td>
+<td>Columnar</td>
+</tr>
+<tr>
+<td><strong>Analytical query</strong> (avg, sum, filter)</td>
+<td>Slow (scan all data)</td>
+<td>Fast (read only needed columns)</td>
+<td>Columnar</td>
+</tr>
+<tr>
+<td><strong>Insert one record</strong></td>
+<td>Fast (append 1 block)</td>
+<td>Slow (append to all columns)</td>
+<td>Row-based</td>
+</tr>
+<tr>
+<td><strong>Update one record</strong></td>
+<td>Fast (modify 1 block)</td>
+<td>Very slow (recompress/rewrite)</td>
+<td>Row-based</td>
+</tr>
+<tr>
+<td><strong>Delete one record</strong></td>
+<td>Fast (mark deleted)</td>
+<td>Very slow (rewrite file)</td>
+<td>Row-based</td>
+</tr>
+<tr>
+<td><strong>Compression ratio</strong></td>
+<td>Lower (mixed data types)</td>
+<td>Higher (similar values together)</td>
+<td>Columnar</td>
+</tr>
+<tr>
+<td><strong>Spatial query</strong></td>
+<td>Medium (with spatial index)</td>
+<td>Slower (less optimized for spatial)</td>
+<td>Row-based*</td>
+</tr>
+</tbody>
+</table>
+<p>*With proper spatial indexing like FlatGeobuf's R-tree</p>
+<h2 id="when-to-use-each">When to Use Each<a class="headerlink" href="#when-to-use-each" title="Permanent link">&para;</a></h2>
+<h3 id="use-row-based-storage-when">Use Row-Based Storage When:<a class="headerlink" href="#use-row-based-storage-when" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Frequent writes/updates/deletes</strong> - Transactional workloads (OLTP)</li>
+<li><strong>Need complete records</strong> - "Get all info for user #12345"</li>
+<li><strong>Spatial filtering is primary</strong> - "Features in this bounding box"</li>
+<li><strong>Real-time data collection</strong> - Sensor data, logs, continuous updates</li>
+</ul>
+<p><strong>Examples:</strong>
+- PostgreSQL + PostGIS (production database)
+- FlatGeobuf (web mapping with spatial index)
+- GeoPackage (general-purpose sharing)</p>
+<h3 id="use-columnar-storage-when">Use Columnar Storage When:<a class="headerlink" href="#use-columnar-storage-when" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Analytical queries</strong> - Aggregations, statistics, filtering by attributes</li>
+<li><strong>Read-heavy workloads</strong> - "Write once, read many" (OLAP)</li>
+<li><strong>Need efficient compression</strong> - Bandwidth/storage constraints</li>
+<li><strong>Cloud storage</strong> - Minimize data transfer costs</li>
+<li><strong>Large datasets</strong> - Millions to billions of records</li>
+</ul>
+<p><strong>Examples:</strong>
+- GeoParquet (data science, analytics)
+- Data warehouses (BigQuery, Snowflake)
+- Analytical databases (DuckDB, ClickHouse)</p>
+<h2 id="real-world-patterns">Real-World Patterns<a class="headerlink" href="#real-world-patterns" title="Permanent link">&para;</a></h2>
+<h3 id="pattern-1-hybrid-architecture">Pattern 1: Hybrid Architecture<a class="headerlink" href="#pattern-1-hybrid-architecture" title="Permanent link">&para;</a></h3>
+<p>Many systems use <strong>both</strong> strategically:</p>
+<pre><code>Live Data (changing frequently)
+    ↓
+PostgreSQL + PostGIS (row-based)
+    ↓ Export nightly
+GeoParquet in Data Lake (columnar)
+    ↓ Analytics
+Reports &amp; Dashboards
+</code></pre>
+<p><strong>Why:</strong> Optimize for different access patterns
+- PostgreSQL: Fast writes for live updates
+- GeoParquet: Fast analytics on historical data</p>
+<h3 id="pattern-2-format-conversion">Pattern 2: Format Conversion<a class="headerlink" href="#pattern-2-format-conversion" title="Permanent link">&para;</a></h3>
+<p>Start with one, convert for different uses:</p>
+<pre><code>Survey Data Collection
+    ↓
+GeoPackage (row-based, easy sharing)
+    ↓ Convert for analysis
+GeoParquet (columnar analytics)
+    ↓ Convert for web map
+FlatGeobuf (row-based with spatial index)
+</code></pre>
+<p><strong>Why:</strong> Each format optimized for its use case</p>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Physical layout matters</strong> - How data is stored on disk determines performance</li>
+<li><strong>Row-based wins for complete records</strong> - One block read gets all attributes</li>
+<li><strong>Columnar wins for analytics</strong> - Read only columns needed, skip irrelevant data</li>
+<li><strong>Compression favors columnar</strong> - Similar values together enable dictionary/run-length encoding</li>
+<li><strong>Writes favor row-based</strong> - One record = one block, no need to touch multiple columns</li>
+<li><strong>No universal best</strong> - Choose based on access patterns</li>
+<li><strong>Hybrid approaches work</strong> - Use both for different stages of data lifecycle</li>
+</ol>
+<h2 id="related-topics">Related Topics<a class="headerlink" href="#related-topics" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../file-formats/">File Formats Overview</a> - Which formats use which storage</li>
+<li><a href="../../file-formats/geoparquet/">GeoParquet</a> - Columnar format details</li>
+<li><a href="../../file-formats/flatgeobuf/">FlatGeobuf</a> - Row-based with spatial index</li>
+<li><a href="../performance/write-performance.md">Write Performance</a> - Detailed write comparisons</li>
+<li><a href="../performance/read-performance.md">Read Performance</a> - Detailed read comparisons</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://parquet.apache.org/docs/file-format/">Parquet Format Documentation</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Column-oriented_DBMS">Column-Oriented DBMS (Wikipedia)</a></li>
+<li><a href="https://duckdb.org/why_duckdb#fast-analytical-queries">DuckDB: Why Columnar?</a></li>
+</ul>
+<!-- Reference-style links -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

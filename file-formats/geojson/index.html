@@ -1,0 +1,880 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>GeoJSON - geographic-databases</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#geojson" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="geographic-databases" class="md-header__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            geographic-databases
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GeoJSON
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="geographic-databases" class="md-nav__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    geographic-databases
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-geojson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is GeoJSON?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Geometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#featurecollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FeatureCollection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crs-restriction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CRS Restriction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-its-large" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why It's Large
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why It&#39;s Large">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text-encoding-of-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text Encoding of Numbers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repeated-property-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repeated Property Names
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json-syntax-overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JSON Syntax Overhead
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-spatial-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No Spatial Index
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-fixed-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No Fixed Schema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newline-delimited-geojson-geojsonseq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Newline-Delimited GeoJSON (GeoJSONSeq)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-geojson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use GeoJSON
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When to Use GeoJSON">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ideal-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ideal for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-ideal-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not ideal for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tooling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tooling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python-geopandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python (GeoPandas)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#javascript" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JavaScript
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gdal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GDAL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Topics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="geojson">GeoJSON<a class="headerlink" href="#geojson" title="Permanent link">&para;</a></h1>
+<p>GeoJSON is a text-based format that encodes geographic data as standard JSON. Defined by <a href="https://tools.ietf.org/html/rfc7946">RFC 7946</a>, it is the default exchange format for web mapping.</p>
+<h2 id="what-is-geojson">What is GeoJSON?<a class="headerlink" href="#what-is-geojson" title="Permanent link">&para;</a></h2>
+<p>A GeoJSON file is plain JSON with a specific structure for geographic features. No binary encoding, no index, no metadata tables — just text you can read in any editor.</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;FeatureCollection&quot;,
+  &quot;features&quot;: [
+    {
+      &quot;type&quot;: &quot;Feature&quot;,
+      &quot;geometry&quot;: {
+        &quot;type&quot;: &quot;Point&quot;,
+        &quot;coordinates&quot;: [10.75, 59.91]
+      },
+      &quot;properties&quot;: {
+        &quot;name&quot;: &quot;Oslo&quot;,
+        &quot;population&quot;: 709037
+      }
+    }
+  ]
+}
+</code></pre>
+<p><strong>Design goals:</strong>
+- Human-readable
+- Native to JavaScript and the web
+- Simple structure, easy to generate and consume
+- No special tools required</p>
+<h2 id="structure">Structure<a class="headerlink" href="#structure" title="Permanent link">&para;</a></h2>
+<p>GeoJSON has three building blocks:</p>
+<h3 id="geometry">Geometry<a class="headerlink" href="#geometry" title="Permanent link">&para;</a></h3>
+<p>The spatial part — a type and an array of coordinates:</p>
+<pre><code class="language-json">{&quot;type&quot;: &quot;Point&quot;, &quot;coordinates&quot;: [10.75, 59.91]}
+
+{&quot;type&quot;: &quot;LineString&quot;, &quot;coordinates&quot;: [[10.7, 59.9], [10.8, 59.9], [10.8, 60.0]]}
+
+{&quot;type&quot;: &quot;Polygon&quot;, &quot;coordinates&quot;: [[[10.6, 59.8], [10.9, 59.8], [10.9, 60.0], [10.6, 60.0], [10.6, 59.8]]]}
+</code></pre>
+<p>Also supports <code>MultiPoint</code>, <code>MultiLineString</code>, <code>MultiPolygon</code>, and <code>GeometryCollection</code>.</p>
+<p><strong>Coordinate order is [longitude, latitude]</strong> — this is a common source of confusion since most people say "lat/lon".</p>
+<h3 id="feature">Feature<a class="headerlink" href="#feature" title="Permanent link">&para;</a></h3>
+<p>A geometry paired with properties (attributes):</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;Feature&quot;,
+  &quot;geometry&quot;: {&quot;type&quot;: &quot;Point&quot;, &quot;coordinates&quot;: [10.75, 59.91]},
+  &quot;properties&quot;: {
+    &quot;name&quot;: &quot;Oslo&quot;,
+    &quot;population&quot;: 709037,
+    &quot;country&quot;: &quot;Norway&quot;
+  }
+}
+</code></pre>
+<p>Properties is a freeform JSON object — there is no fixed schema. Different features in the same file can have different properties.</p>
+<h3 id="featurecollection">FeatureCollection<a class="headerlink" href="#featurecollection" title="Permanent link">&para;</a></h3>
+<p>An array of Features — this is what most GeoJSON files are:</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;FeatureCollection&quot;,
+  &quot;features&quot;: [
+    {&quot;type&quot;: &quot;Feature&quot;, &quot;geometry&quot;: {...}, &quot;properties&quot;: {...}},
+    {&quot;type&quot;: &quot;Feature&quot;, &quot;geometry&quot;: {...}, &quot;properties&quot;: {...}}
+  ]
+}
+</code></pre>
+<h2 id="crs-restriction">CRS Restriction<a class="headerlink" href="#crs-restriction" title="Permanent link">&para;</a></h2>
+<p>RFC 7946 mandates <strong>WGS84 (EPSG:4326)</strong> as the only valid coordinate reference system.</p>
+<p>If your data is in a projected CRS (like UTM zone 33N / EPSG:25833), you must <strong>reproject to WGS84</strong> before writing valid GeoJSON. Tools like GeoPandas handle this automatically:</p>
+<pre><code class="language-python"># Data in EPSG:25833 → must reproject for GeoJSON
+gdf_wgs84 = gdf.to_crs(epsg=4326)
+gdf_wgs84.to_file(&quot;output.geojson&quot;, driver=&quot;GeoJSON&quot;)
+</code></pre>
+<p>Earlier GeoJSON specifications allowed other CRS, but RFC 7946 locked it to WGS84 for interoperability.</p>
+<h2 id="why-its-large">Why It's Large<a class="headerlink" href="#why-its-large" title="Permanent link">&para;</a></h2>
+<p>GeoJSON is typically the largest format for the same data. Three reasons:</p>
+<h3 id="text-encoding-of-numbers">Text Encoding of Numbers<a class="headerlink" href="#text-encoding-of-numbers" title="Permanent link">&para;</a></h3>
+<p>Every coordinate is stored as text:</p>
+<pre><code>Binary (float64):  8 bytes for 59.913868
+Text (GeoJSON):    9 bytes for &quot;59.913868&quot; + separators
+</code></pre>
+<p>A polygon with 100 vertices needs ~200 coordinate values. The text overhead accumulates.</p>
+<h3 id="repeated-property-names">Repeated Property Names<a class="headerlink" href="#repeated-property-names" title="Permanent link">&para;</a></h3>
+<p>Every feature repeats all property names:</p>
+<pre><code class="language-json">{&quot;properties&quot;: {&quot;name&quot;: &quot;Oslo&quot;, &quot;population&quot;: 709037}}
+{&quot;properties&quot;: {&quot;name&quot;: &quot;Bergen&quot;, &quot;population&quot;: 289330}}
+{&quot;properties&quot;: {&quot;name&quot;: &quot;Trondheim&quot;, &quot;population&quot;: 212660}}
+</code></pre>
+<p><code>"name"</code> and <code>"population"</code> appear in every feature. In binary formats, column names are stored once in the schema.</p>
+<h3 id="json-syntax-overhead">JSON Syntax Overhead<a class="headerlink" href="#json-syntax-overhead" title="Permanent link">&para;</a></h3>
+<p>Brackets, braces, quotes, commas, and colons add up:</p>
+<pre><code class="language-json">{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[10.75,59.91]},&quot;properties&quot;:{&quot;name&quot;:&quot;Oslo&quot;}}
+</code></pre>
+<p>Compare to a binary format where the same feature might be ~30 bytes instead of ~100.</p>
+<h2 id="no-spatial-index">No Spatial Index<a class="headerlink" href="#no-spatial-index" title="Permanent link">&para;</a></h2>
+<p>GeoJSON has no built-in spatial index. To find features in a bounding box, you must:</p>
+<ol>
+<li>Parse the entire JSON file</li>
+<li>Check every feature's geometry against the query area</li>
+</ol>
+<p>For small datasets this is fine. For large datasets, this is why formats like <a href="../flatgeobuf/">FlatGeobuf</a> exist.</p>
+<h2 id="no-fixed-schema">No Fixed Schema<a class="headerlink" href="#no-fixed-schema" title="Permanent link">&para;</a></h2>
+<p>Properties can vary between features:</p>
+<pre><code class="language-json">{&quot;properties&quot;: {&quot;name&quot;: &quot;Oslo&quot;, &quot;population&quot;: 709037}}
+{&quot;properties&quot;: {&quot;name&quot;: &quot;Nordkapp&quot;, &quot;tourism&quot;: true}}
+</code></pre>
+<p><strong>Flexible</strong> — good for heterogeneous data or quick prototyping.
+<strong>Unpredictable</strong> — tools can't assume which properties exist, making validation and type checking harder.</p>
+<h2 id="newline-delimited-geojson-geojsonseq">Newline-Delimited GeoJSON (GeoJSONSeq)<a class="headerlink" href="#newline-delimited-geojson-geojsonseq" title="Permanent link">&para;</a></h2>
+<p>Standard GeoJSON wraps everything in a FeatureCollection array, requiring the entire file to be parsed as one JSON document.</p>
+<p><strong>GeoJSON Text Sequences</strong> (<a href="https://tools.ietf.org/html/rfc8142">RFC 8142</a>) puts one Feature per line:</p>
+<pre><code>{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[10.75,59.91]},&quot;properties&quot;:{&quot;name&quot;:&quot;Oslo&quot;}}
+{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[5.32,60.39]},&quot;properties&quot;:{&quot;name&quot;:&quot;Bergen&quot;}}
+</code></pre>
+<p><strong>Advantages:</strong>
+- Process line by line without loading entire file into memory
+- Append features by appending lines
+- Easier to process with standard unix tools (<code>wc -l</code>, <code>head</code>, <code>grep</code>)</p>
+<p><strong>GDAL/ogr2ogr</strong> supports this as the <code>GeoJSONSeq</code> driver.</p>
+<h2 id="when-to-use-geojson">When to Use GeoJSON<a class="headerlink" href="#when-to-use-geojson" title="Permanent link">&para;</a></h2>
+<h3 id="ideal-for">Ideal for:<a class="headerlink" href="#ideal-for" title="Permanent link">&para;</a></h3>
+<p><strong>Web APIs and JavaScript:</strong>
+- Native JSON parsing — no special libraries needed
+- Every web mapping library accepts GeoJSON (Leaflet, Mapbox GL, OpenLayers)
+- Default format for most geospatial REST APIs</p>
+<p><strong>Small datasets:</strong>
+- Under ~10,000 features where size and parse time don't matter
+- Quick data exchange</p>
+<p><strong>Debugging and development:</strong>
+- Human-readable — open in a text editor
+- Easy to hand-edit or generate
+- Inspect data without special tools</p>
+<h3 id="not-ideal-for">Not ideal for:<a class="headerlink" href="#not-ideal-for" title="Permanent link">&para;</a></h3>
+<p><strong>Large datasets:</strong>
+- File size grows fast (text encoding, repeated property names)
+- Parse time increases linearly — no way to skip features
+- Use <a href="../flatgeobuf/">FlatGeobuf</a> or <a href="../geoparquet/">GeoParquet</a> instead</p>
+<p><strong>Spatial queries:</strong>
+- No spatial index — must check every feature
+- Use <a href="../flatgeobuf/">FlatGeobuf</a> instead</p>
+<p><strong>Non-WGS84 data:</strong>
+- Must reproject to EPSG:4326
+- If you need to preserve a projected CRS, use <a href="../geopackage/">GeoPackage</a> or <a href="../geoparquet/">GeoParquet</a></p>
+<p><strong>Data with fixed schema:</strong>
+- No schema enforcement
+- Use <a href="../geopackage/">GeoPackage</a> (SQL schema) or <a href="../geoparquet/">GeoParquet</a> (typed columns)</p>
+<h2 id="tooling">Tooling<a class="headerlink" href="#tooling" title="Permanent link">&para;</a></h2>
+<h3 id="python-geopandas">Python (GeoPandas)<a class="headerlink" href="#python-geopandas" title="Permanent link">&para;</a></h3>
+<pre><code class="language-python">import geopandas as gpd
+
+# Read
+gdf = gpd.read_file(&quot;data.geojson&quot;)
+
+# Write (reprojects to WGS84 if needed)
+gdf.to_crs(epsg=4326).to_file(&quot;output.geojson&quot;, driver=&quot;GeoJSON&quot;)
+
+# Write newline-delimited
+gdf.to_file(&quot;output.geojsonl&quot;, driver=&quot;GeoJSONSeq&quot;)
+</code></pre>
+<h3 id="javascript">JavaScript<a class="headerlink" href="#javascript" title="Permanent link">&para;</a></h3>
+<pre><code class="language-javascript">// Native parsing — no library needed
+const response = await fetch(&quot;data.geojson&quot;);
+const geojson = await response.json();
+
+// Use with Leaflet
+L.geoJSON(geojson).addTo(map);
+
+// Use with Mapbox GL
+map.addSource(&quot;data&quot;, { type: &quot;geojson&quot;, data: geojson });
+</code></pre>
+<h3 id="gdal">GDAL<a class="headerlink" href="#gdal" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Convert to GeoJSON
+ogr2ogr -f GeoJSON output.geojson input.gpkg
+
+# Convert to newline-delimited
+ogr2ogr -f GeoJSONSeq output.geojsonl input.gpkg
+
+# Reproject to WGS84 during conversion
+ogr2ogr -f GeoJSON -t_srs EPSG:4326 output.geojson input_utm.gpkg
+</code></pre>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Plain JSON</strong> — Human-readable, no special tools needed</li>
+<li><strong>JavaScript-native</strong> — Default format for web mapping</li>
+<li><strong>WGS84 only</strong> — Must reproject from other CRS (RFC 7946)</li>
+<li><strong>No spatial index</strong> — Must parse entire file for spatial queries</li>
+<li><strong>No fixed schema</strong> — Flexible but unpredictable properties</li>
+<li><strong>Largest file size</strong> — Text encoding and JSON verbosity</li>
+<li><strong>Best for small data and web</strong> — Not for large datasets or analytics</li>
+</ol>
+<h2 id="related-topics">Related Topics<a class="headerlink" href="#related-topics" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../flatgeobuf/">FlatGeobuf</a> — Binary alternative with spatial index (for larger web datasets)</li>
+<li><a href="../geoparquet/">GeoParquet</a> — Columnar binary format (for analytics)</li>
+<li><a href="../geopackage/">GeoPackage</a> — SQLite-based with schema (for sharing)</li>
+<li><a href="../">File Formats Overview</a> — Compare all formats</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://tools.ietf.org/html/rfc7946">RFC 7946 — The GeoJSON Format</a></li>
+<li><a href="https://tools.ietf.org/html/rfc8142">RFC 8142 — GeoJSON Text Sequences</a></li>
+<li><a href="https://geojson.org/">geojson.org</a></li>
+<li><a href="https://geojson.io/">geojson.io</a> — Interactive GeoJSON editor</li>
+</ul>
+<!-- Reference-style links -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

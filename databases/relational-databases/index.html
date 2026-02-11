@@ -1,0 +1,841 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Relational Databases - geographic-databases</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#relational-databases" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="geographic-databases" class="md-header__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            geographic-databases
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Relational Databases
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="geographic-databases" class="md-nav__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    geographic-databases
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file-formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema-enforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema Enforcement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primary-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Relations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#joins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Joins
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#row-based-vs-column-based-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Row-Based vs Column-Based Engines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Row-Based vs Column-Based Engines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#same-query-two-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Same Query, Two Engines
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-each-engine-finds-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Each Engine Finds Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Each Engine Finds Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b-tree-lookup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B-tree Lookup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#column-metadata-lookup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Column Metadata Lookup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-core-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Core Difference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Topics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="relational-databases">Relational Databases<a class="headerlink" href="#relational-databases" title="Permanent link">&para;</a></h1>
+<p><strong>Relational databases</strong> store data as rows and columns in tables with predefined schemas. Tables are linked within a database using relations and queried using the <a href="https://en.wikipedia.org/wiki/SQL" title="SQL language">SQL query language</a>. Relational databases can be <a href="../../concepts/row-vs-columnar/">row-based</a> (SQLite/<a href="../../file-formats/geopackage/">GeoPackage</a>) or <a href="../../concepts/row-vs-columnar/">column-based</a> (<a href="../duckdb/">DuckDB</a>).</p>
+<h2 id="tables">Tables<a class="headerlink" href="#tables" title="Permanent link">&para;</a></h2>
+<p>The building blocks of relational databases are <strong>tables</strong>. A table is a structured collection of rows and columns, like a spreadsheet, but with enforced types:</p>
+<pre><code class="language-sql">CREATE TABLE buildings (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    area DOUBLE PRECISION,
+    type TEXT,
+    municipality_id INTEGER,
+    geom GEOMETRY
+);
+</code></pre>
+<p>Each column has a type (<code>INTEGER</code>, <code>TEXT</code>, <code>GEOMETRY</code>). Every row must conform to this schema. You can't put text in an integer column.</p>
+<pre><code>buildings:
+| id | name        | area | type       | municipality_id | geom             |
+|----|-------------|------|------------|-----------------|------------------|
+| 1  | City Hall   | 2500 | public     | 1               | &lt;polygon bytes&gt;  |
+| 2  | Library     |  800 | public     | 1               | &lt;polygon bytes&gt;  |
+| 3  | Concert H.  | 1200 | cultural   | 2               | &lt;polygon bytes&gt;  |
+</code></pre>
+<h3 id="schema-enforcement">Schema Enforcement<a class="headerlink" href="#schema-enforcement" title="Permanent link">&para;</a></h3>
+<p>The schema is defined once at table creation and enforced on every row. This is a key difference from formats like <a href="../../file-formats/geojson/">GeoJSON</a>, where properties are freeform JSON and different features can have different fields.</p>
+<p>Schema enforcement means:</p>
+<ul>
+<li>Every row has the same columns with the same types</li>
+<li>Tools can rely on the structure (no guessing which fields exist)</li>
+<li>Invalid data is rejected at insertion</li>
+</ul>
+<h3 id="primary-keys">Primary Keys<a class="headerlink" href="#primary-keys" title="Permanent link">&para;</a></h3>
+<p>A table should have a <strong>primary key</strong>; a column (or combination of columns) that uniquely identifies each row. In the example above, <code>id</code> is the primary key; no two buildings can share the same <code>id</code>.</p>
+<p>Primary keys serve two purposes:</p>
+<ol>
+<li><strong>Uniqueness</strong> - guarantees no duplicate rows</li>
+<li><strong>Fast lookup</strong> - the database builds an index on the primary key (see <a href="#b-tree-lookup">How Row-Based Engines Find Data</a>)</li>
+</ol>
+<h2 id="relations">Relations<a class="headerlink" href="#relations" title="Permanent link">&para;</a></h2>
+<p>The "relational" in relational database means tables relate to each other through shared keys. This is what distinguishes a relational database from a collection of independent tables.</p>
+<p>Consider two tables, <code>municipalities</code> and <code>buildings</code>:</p>
+<pre><code>municipalities:
+| id | name      | population |
+|----|-----------|------------|
+| 1  | Oslo      | 709037     |
+| 2  | Bergen    | 289330     |
+| 3  | Trondheim | 212660     |
+
+buildings:
+| id | name        | area | type       | municipality_id | geom             |
+|----|-------------|------|------------|-----------------|------------------|
+| 1  | City Hall   | 2500 | public     | 1               | &lt;polygon bytes&gt;  |
+| 2  | Library     |  800 | public     | 1               | &lt;polygon bytes&gt;  |
+| 3  | Concert H.  | 1200 | cultural   | 2               | &lt;polygon bytes&gt;  |
+| 4  | Museum      |  600 | cultural   | 3               | &lt;polygon bytes&gt;  |
+| 5  | School      |  900 | education  | 1               | &lt;polygon bytes&gt;  |
+</code></pre>
+<p>The <code>municipality_id</code> column in <code>buildings</code> points to a row in <code>municipalities</code>. This is a <strong>foreign key</strong>, it references the primary key of another table.</p>
+<p>The alternative would be to duplicate municipality data in every building row ("Oslo", 709037, "Oslo", 709037...). Relations avoid this duplication — store municipality data once, reference it by ID.</p>
+<h3 id="joins">Joins<a class="headerlink" href="#joins" title="Permanent link">&para;</a></h3>
+<p>A <strong>join</strong> combines rows from two tables using their relationship:</p>
+<pre><code class="language-sql">SELECT b.name, b.area, m.name AS municipality
+FROM buildings b
+JOIN municipalities m ON b.municipality_id = m.id;
+</code></pre>
+<p>Result:</p>
+<pre><code>| name        | area | municipality |
+|-------------|------|--------------|
+| City Hall   | 2500 | Oslo         |
+| Library     |  800 | Oslo         |
+| Concert H.  | 1200 | Bergen       |
+| Museum      |  600 | Trondheim    |
+| School      |  900 | Oslo         |
+</code></pre>
+<p>The database matched <code>municipality_id = 1</code> to <code>municipalities.id = 1</code> ("Oslo") for each building.</p>
+<h2 id="sql">SQL<a class="headerlink" href="#sql" title="Permanent link">&para;</a></h2>
+<p>SQL (Structured Query Language) is the standard language for querying relational databases. The key operations:</p>
+<pre><code class="language-sql">-- Filter rows
+SELECT name, area FROM buildings WHERE type = 'public';
+
+-- Aggregate
+SELECT type, COUNT(*), AVG(area) FROM buildings GROUP BY type;
+
+-- Join tables
+SELECT b.name, m.name AS municipality
+FROM buildings b
+JOIN municipalities m ON b.municipality_id = m.id;
+
+-- Combined: average building area per municipality
+SELECT m.name, AVG(b.area) AS avg_area
+FROM buildings b
+JOIN municipalities m ON b.municipality_id = m.id
+GROUP BY m.name;
+</code></pre>
+<p>The same SQL syntax works across different engines — SQLite, PostgreSQL, DuckDB. The engines differ in how they <em>execute</em> the query, not in how you write it.</p>
+<h2 id="row-based-vs-column-based-engines">Row-Based vs Column-Based Engines<a class="headerlink" href="#row-based-vs-column-based-engines" title="Permanent link">&para;</a></h2>
+<p>Relational databases share the same query language (SQL) and data model (tables with relations), but differ in how they store and process data. The two main approaches are <a href="../../concepts/row-vs-columnar/">row-based and column-based storage</a>.</p>
+<h3 id="same-query-two-engines">Same Query, Two Engines<a class="headerlink" href="#same-query-two-engines" title="Permanent link">&para;</a></h3>
+<p>Consider this query on the buildings table:</p>
+<pre><code class="language-sql">SELECT m.name, AVG(b.area) AS avg_area
+FROM buildings b
+JOIN municipalities m ON b.municipality_id = m.id
+GROUP BY m.name;
+</code></pre>
+<p>"Average building area per municipality." Both SQLite and DuckDB return the same result, but get there very differently.</p>
+<p><strong>SQLite (row-based, same engine as <a href="../../file-formats/geopackage/">GeoPackage</a>)</strong></p>
+<p>SQLite stores data row by row on disk:</p>
+<pre><code>Page 1: [id=1, &quot;City Hall&quot;, 2500, &quot;public&quot;, 1, &lt;500 bytes of polygon&gt;]
+Page 2: [id=2, &quot;Library&quot;, 800, &quot;public&quot;, 1, &lt;300 bytes of polygon&gt;]
+Page 3: [id=3, &quot;Concert H.&quot;, 1200, &quot;cultural&quot;, 2, &lt;400 bytes of polygon&gt;]
+...
+</code></pre>
+<p>To answer the query, SQLite:</p>
+<ol>
+<li>Scans every row in <code>buildings</code>. It reads the full row from disk, including <code>name</code>, <code>type</code>, and <code>geom</code> columns even though the query only needs <code>area</code> and <code>municipality_id</code></li>
+<li>For each row, looks up <code>municipality_id</code> in <code>municipalities</code></li>
+<li>Accumulates sums and counts per group</li>
+<li>Computes averages</li>
+</ol>
+<p>The problem: the <code>geom</code> column is by far the largest (hundreds or thousands of bytes per polygon), but the query doesn't need it. SQLite reads it anyway because it's packed in the same row.</p>
+<p><strong>DuckDB (columnar)</strong></p>
+<p>DuckDB stores data column by column:</p>
+<pre><code>area column:         [2500, 800, 1200, 600, 900]
+municipality_id col: [1, 1, 2, 3, 1]
+name column:         [&quot;City Hall&quot;, &quot;Library&quot;, &quot;Concert H.&quot;, &quot;Museum&quot;, &quot;School&quot;]
+type column:         [&quot;public&quot;, &quot;public&quot;, &quot;cultural&quot;, &quot;cultural&quot;, &quot;education&quot;]
+geom column:         [&lt;500 bytes&gt;, &lt;300 bytes&gt;, &lt;400 bytes&gt;, ...]
+</code></pre>
+<p>To answer the query, DuckDB:</p>
+<ol>
+<li>Reads <strong>only</strong> the <code>area</code> column and <code>municipality_id</code> column from <code>buildings</code> — never touches <code>name</code>, <code>type</code>, or <code>geom</code></li>
+<li>Reads only <code>id</code> and <code>name</code> from <code>municipalities</code></li>
+<li>Processes in vectorized batches (thousands of values at once, CPU-cache friendly)</li>
+<li>Computes averages</li>
+</ol>
+<p>The geometry column — the largest part of the data — is never read from disk.</p>
+<pre><code>SQLite reads from buildings:
+  ████████████████████████████████████  ← entire rows including geom
+  Only needs: ██                        ← area + municipality_id
+
+DuckDB reads from buildings:
+  ██                                    ← only area + municipality_id
+</code></pre>
+<p>For a table with millions of buildings where the geometry column dominates the storage, DuckDB might read 1% of the bytes that SQLite reads for the same analytical query.</p>
+<p>We can flip the query and ask for everything about building number 42:</p>
+<pre><code class="language-sql">SELECT * FROM buildings WHERE id = 42;
+</code></pre>
+<p>Now SQLite wins: the entire row is stored contiguously, the location of row number 42 is quicly found using a <a href="#b-tree-lookup">B-tree Lookub</a> and one row is read. DuckDB has to gather <code>id</code>, <code>name</code>, <code>area</code>, <code>type</code>, <code>municipality_id</code>, and <code>geom</code> from six different column locations (and thus read a lot of geometry objects!).</p>
+<h3 id="how-each-engine-finds-data">How Each Engine Finds Data<a class="headerlink" href="#how-each-engine-finds-data" title="Permanent link">&para;</a></h3>
+<h4 id="b-tree-lookup">B-tree Lookup<a class="headerlink" href="#b-tree-lookup" title="Permanent link">&para;</a></h4>
+<p>SQLite organizes each table as a <strong>B-tree</strong>: a tree structure indexed by primary key. The database file is divided into fixed-size pages (default 4KB):</p>
+<pre><code>B-tree for buildings (indexed by id):
+
+         ┌──────────────┐
+         │  [20, 40, 60] │  ← Root page: &quot;ids 1-20 go left, 21-40 middle...&quot;
+         └──┬─────┬────┬─┘
+            │     │    │
+     ┌──────┘     │    └──────┐
+     ▼            ▼           ▼
+┌─────────┐ ┌─────────┐ ┌─────────┐
+│ rows    │ │ rows    │ │ rows    │
+│ 1-20    │ │ 21-40   │ │ 41-60   │  ← Leaf pages: actual row data
+└─────────┘ └─────────┘ └─────────┘
+</code></pre>
+<p><code>SELECT * FROM buildings WHERE id = 42</code>:</p>
+<ol>
+<li>Read root page — key 42 &gt; 40, so go right</li>
+<li>Read leaf page for 41-60 — find row 42</li>
+<li>Done. Two page reads.</li>
+</ol>
+<p>Finding the row is thus <strong>O(log n)</strong> where the base of log is the branching factor (number of branches). In the example above, that would be three but for at typical B-tree it is around 100. For 1 million rows we thus get: <span class="arithmatex">\(log_{100}(1,000,000)  = 3\)</span> levels, meaning 3 page reads to find any row.</p>
+<p>Without the B-tree index (no primary key or index on the column), the database falls back to a <strong>full table scan</strong> — checking every row, which is O(n).</p>
+<h4 id="column-metadata-lookup">Column Metadata Lookup<a class="headerlink" href="#column-metadata-lookup" title="Permanent link">&para;</a></h4>
+<p>DuckDB organizes data into <strong>row groups</strong> (batches of rows). Within each row group, columns are stored as contiguous chunks. A metadata header maps each (row group, column) to a byte offset:</p>
+<pre><code>File metadata header:
+┌────────────────────────────────────────────────┐
+│ Row Group 0 (rows 0-9999):                     │
+│   id column      → offset 1000,  length 40000  │
+│   name column    → offset 41000, length 80000  │
+│   area column    → offset 121000, length 40000  │
+│   geom column    → offset 161000, length 900000 │
+│                                                 │
+│ Row Group 1 (rows 10000-19999):                 │
+│   id column      → offset 1100000, ...          │
+│   ...                                           │
+└────────────────────────────────────────────────┘
+</code></pre>
+<p><code>SELECT AVG(area) FROM buildings</code>:</p>
+<ol>
+<li>Read file metadata header — entry for "area column" is at a fixed position within the header (O(1) lookup, regardless of how many rows exist)</li>
+<li>Get the byte offset for the area column in row group 0</li>
+<li>Seek to that offset, read the column chunk — get all 10,000 area values</li>
+<li>Repeat for each row group</li>
+<li>Never touch <code>id</code>, <code>name</code>, or <code>geom</code> bytes</li>
+</ol>
+<p>The metadata header has a fixed structure — entry N is always at the same position within the header. The actual byte offset of the column data on disk depends on the sizes of preceding columns, but finding the entry that tells you that offset is O(1).</p>
+<h4 id="the-core-difference">The Core Difference<a class="headerlink" href="#the-core-difference" title="Permanent link">&para;</a></h4>
+<pre><code>SQLite:   B-tree → finds the ROW   → row has all columns together
+DuckDB:   Header → finds the COLUMN → column has all rows together
+</code></pre>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Find row by key</th>
+<th>Find column</th>
+<th>Scan one column</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Row-based</strong></td>
+<td>O(log n)</td>
+<td>O(1)*</td>
+<td>O(n x row_size)</td>
+</tr>
+<tr>
+<td><strong>Columnar</strong></td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>O(n x column_size)</td>
+</tr>
+</tbody>
+</table>
+<p>* Row-based engines also find columns in O(1) within a row (fixed offsets in the schema), but must read the full row from disk to get there.</p>
+<p>The last column is the key difference for analytics — <code>row_size</code> includes the geometry column, <code>column_size</code> is just the one column you need.</p>
+<p>For a deeper look at the storage layout, compression, and performance trade-offs, see <a href="../../concepts/row-vs-columnar/">Row-Based vs Columnar Storage</a>.</p>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Tables</strong> — Structured collections of rows and columns with enforced types</li>
+<li><strong>Primary keys</strong> — Uniquely identify rows, enable fast B-tree lookups</li>
+<li><strong>Foreign keys</strong> — Link tables together, avoiding data duplication</li>
+<li><strong>Joins</strong> — Combine related tables in a single query</li>
+<li><strong>SQL</strong> — Same query language across different engines</li>
+<li><strong>Row-based engines</strong> (SQLite) — Fast for retrieving complete records, reads entire rows including unused columns</li>
+<li><strong>Column-based engines</strong> (DuckDB) — Fast for analytics, reads only the columns the query needs</li>
+</ol>
+<h2 id="related-topics">Related Topics<a class="headerlink" href="#related-topics" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../concepts/row-vs-columnar/">Row-Based vs Columnar Storage</a> — Storage layout, compression, and performance details</li>
+<li><a href="../../file-formats/geopackage/">GeoPackage</a> — SQLite-based row storage with OGC spatial support</li>
+<li><a href="../duckdb/">DuckDB</a> — Columnar analytical database</li>
+<li><a href="../postgresql-postgis/">PostgreSQL + PostGIS</a> — Row-based server database with spatial extensions</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/SQL" title="SQL language">SQL Language (Wikipedia)</a></li>
+<li><a href="https://www.sqlite.org/btreemodule.html">SQLite B-tree Documentation</a></li>
+<li><a href="https://duckdb.org/why_duckdb#fast-analytical-queries">DuckDB: Why Columnar?</a></li>
+</ul>
+<!-- Links -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

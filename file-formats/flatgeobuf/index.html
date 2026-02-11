@@ -1,0 +1,856 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>FlatGeobuf - geographic-databases</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#flatgeobuf" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="geographic-databases" class="md-header__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            geographic-databases
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              FlatGeobuf
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="geographic-databases" class="md-nav__button md-logo" aria-label="geographic-databases" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    geographic-databases
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-flatgeobuf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is FlatGeobuf?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zero-copy-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Zero-Copy Reading
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Zero-Copy Reading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-flatgeobuf-stores-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How FlatGeobuf Stores Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trade-offs-of-zero-copy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-offs of Zero-Copy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compression-and-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression and Size
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streaming-over-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Streaming Over HTTP
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Streaming Over HTTP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spatial-filtering-benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spatial Filtering Benchmark
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-spatial-pre-filter-pandas-analytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern: Spatial Pre-Filter + Pandas Analytics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indexed-vs-non-indexed-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indexed vs Non-Indexed Mode
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-flatgeobuf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use FlatGeobuf
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When to Use FlatGeobuf">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ideal-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ideal for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-ideal-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not ideal for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tooling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tooling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python-geopandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python (GeoPandas)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#javascript-flatgeobuf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JavaScript (flatgeobuf)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qgis-gdal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QGIS / GDAL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Topics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="flatgeobuf">FlatGeobuf<a class="headerlink" href="#flatgeobuf" title="Permanent link">&para;</a></h1>
+<p>FlatGeobuf is a row-based binary format designed for fast spatial queries and efficient streaming over HTTP. It combines Google's FlatBuffers serialization with a built-in R-tree spatial index.</p>
+<h2 id="what-is-flatgeobuf">What is FlatGeobuf?<a class="headerlink" href="#what-is-flatgeobuf" title="Permanent link">&para;</a></h2>
+<p>FlatGeobuf was created to solve a specific problem: <strong>how do you serve geographic data over the web without a database server?</strong></p>
+<p>It builds on two technologies:</p>
+<ul>
+<li><strong><a href="https://flatbuffers.dev/">FlatBuffers</a></strong> (Google): A binary serialization library where the on-disk format matches the in-memory layout — enabling zero-copy reads</li>
+<li><strong><a href="https://en.wikipedia.org/wiki/Hilbert_R-tree#Packed_Hilbert_R-trees">Packed Hilbert R-tree</a></strong>: A static spatial index embedded directly in the file</li>
+</ul>
+<p><strong>Design goals:</strong>
+- Stream partial data over HTTP (only download what you need)
+- Fast spatial filtering without server-side processing
+- Simple file format (no database engine required)
+- Zero parsing overhead when reading features</p>
+<h2 id="file-structure">File Structure<a class="headerlink" href="#file-structure" title="Permanent link">&para;</a></h2>
+<pre><code>FlatGeobuf file:
+┌─────────────────────┐
+│ Header              │  Schema, CRS, geometry type, feature count
+├─────────────────────┤
+│ R-tree Index        │  Packed Hilbert R-tree (all levels)
+│                     │  Compact: only bounding boxes (4 numbers each)
+├─────────────────────┤
+│ Feature 1           │  Geometry + attributes (FlatBuffer encoded)
+│ Feature 2           │
+│ Feature 3           │
+│ ...                 │
+└─────────────────────┘
+</code></pre>
+<p><strong>Header:</strong> Contains metadata about the file — schema (column names/types), coordinate reference system, geometry type, and total feature count.</p>
+<p><strong>R-tree Index:</strong> A spatial index covering all features. The index stores only bounding rectangles, making it compact relative to the actual geometry data. See <a href="../../concepts/spatial-indexing/">Spatial Indexing</a> for how R-trees work and why the index is small.</p>
+<p><strong>Feature Data:</strong> Each feature is stored as a complete FlatBuffer — geometry and all attributes together. This is <a href="../../concepts/row-vs-columnar/">row-based storage</a>: you always read the full feature.</p>
+<h2 id="zero-copy-reading">Zero-Copy Reading<a class="headerlink" href="#zero-copy-reading" title="Permanent link">&para;</a></h2>
+<h3 id="how-flatgeobuf-stores-data">How FlatGeobuf Stores Data<a class="headerlink" href="#how-flatgeobuf-stores-data" title="Permanent link">&para;</a></h3>
+<p>FlatBuffers uses a memory layout where the bytes on disk are identical to how they would be arranged in memory. When you read a feature, the bytes don't need to be parsed or transformed — they're already in the right format.</p>
+<pre><code>On disk (FlatGeobuf file):
+┌──────────────┬────────────┬─────────────────┐
+│ geometry     │ name_offset│ area (float64)   │
+│ (WKB bytes)  │ → &quot;Oslo&quot;   │ 150.5            │
+└──────────────┴────────────┴─────────────────┘
+
+In memory (after reading):
+┌──────────────┬────────────┬─────────────────┐
+│ geometry     │ name_offset│ area (float64)   │
+│ (WKB bytes)  │ → &quot;Oslo&quot;   │ 150.5            │
+└──────────────┴────────────┴─────────────────┘
+
+Same layout — no transformation needed
+</code></pre>
+<p>The application can read fields directly from the buffer by offset, without building intermediate objects.</p>
+<h3 id="trade-offs-of-zero-copy">Trade-offs of Zero-Copy<a class="headerlink" href="#trade-offs-of-zero-copy" title="Permanent link">&para;</a></h3>
+<p><strong>Fast reads:</strong>
+- No parsing step (compare GeoJSON where text must be parsed into numbers)
+- No deserialization (compare GeoPackage where SQLite rows must be decoded)
+- Fields accessed by offset — only read the fields you actually use</p>
+<p><strong>Incompatible with compression:</strong>
+- Zero-copy requires that on-disk bytes match memory layout
+- Compression transforms bytes into a different representation
+- You would have to decompress first, which defeats the purpose
+- This is a deliberate design choice: <strong>read speed over file size</strong></p>
+<p><strong>Not human-readable:</strong>
+- Binary format — can't open in a text editor like GeoJSON
+- Need tools to inspect contents</p>
+<h2 id="compression-and-size">Compression and Size<a class="headerlink" href="#compression-and-size" title="Permanent link">&para;</a></h2>
+<p>FlatGeobuf has <strong>no built-in compression</strong>. This is a direct consequence of the zero-copy design.</p>
+<p><strong>Size comparison to other formats:</strong>
+- Larger than GeoParquet (which uses dictionary encoding, run-length encoding, and codecs like ZSTD)
+- Larger than compressed GeoPackage
+- Smaller than GeoJSON (text encoding is inherently verbose)</p>
+<p><strong>The trade-off is intentional:</strong></p>
+<pre><code>GeoParquet:  Small file → Decompress → Parse → Use
+FlatGeobuf:  Larger file → Use directly
+</code></pre>
+<p>For FlatGeobuf's primary use case (streaming over HTTP), this works well: you're only fetching the features you need via spatial filtering, so total transfer size is small even though individual features are uncompressed.</p>
+<p><strong>External compression</strong> (gzip, brotli) can be applied for archival or transfer, but then you lose zero-copy and streaming capabilities.</p>
+<h2 id="streaming-over-http">Streaming Over HTTP<a class="headerlink" href="#streaming-over-http" title="Permanent link">&para;</a></h2>
+<p>This is FlatGeobuf's core strength. The file structure enables clients to read only the features they need from a remote file.</p>
+<h3 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h3>
+<p>See <a href="../../concepts/spatial-indexing/#flatgeobuf-streaming-with-spatial-index">Spatial Indexing — FlatGeobuf Streaming</a> for the full workflow. The key steps:</p>
+<ol>
+<li><strong>Fetch header + index</strong> — One HTTP request. The index is compact (only bounding boxes), so this is fast.</li>
+<li><strong>Query index in memory</strong> — Traverse the R-tree for your bounding box. No network needed.</li>
+<li><strong>Fetch matching features</strong> — HTTP range requests for specific byte offsets. Only download what you need.</li>
+</ol>
+<h3 id="spatial-filtering-benchmark">Spatial Filtering Benchmark<a class="headerlink" href="#spatial-filtering-benchmark" title="Permanent link">&para;</a></h3>
+<p>Using GeoPandas with a <code>bbox</code> parameter (see <a href="#python-geopandas">Tooling — Python</a> for code), the reader consults the R-tree index and only reads features whose bounding box intersects the query area.</p>
+<p><strong>Results</strong> from <a href="../../demo_flatgeobuf_bbox.py">demo_flatgeobuf_bbox.py</a> on Norwegian mining registration data (EPSG:25833):</p>
+<pre><code>Full read:    6562 features in 0.0701s
+Bbox read:       9 features in 0.0014s
+
+Speedup:        50x faster with bbox filter
+Data reduction: 6562 → 9 features (0.1%)
+Memory saving:  5.71 MB → 0.01 MB (0.1%)
+</code></pre>
+<h3 id="pattern-spatial-pre-filter-pandas-analytics">Pattern: Spatial Pre-Filter + Pandas Analytics<a class="headerlink" href="#pattern-spatial-pre-filter-pandas-analytics" title="Permanent link">&para;</a></h3>
+<p>Since bbox-filtered reads return a regular GeoDataFrame, you can chain spatial filtering with analytical operations. FlatGeobuf handles the spatial part efficiently (via R-tree), then Pandas handles the analytics on the reduced subset.</p>
+<p>This pattern works well when the spatial filter reduces data to a manageable size — see <a href="#python-geopandas">Tooling — Python</a> for a concrete example.</p>
+<h2 id="indexed-vs-non-indexed-mode">Indexed vs Non-Indexed Mode<a class="headerlink" href="#indexed-vs-non-indexed-mode" title="Permanent link">&para;</a></h2>
+<p>FlatGeobuf supports two modes:</p>
+<p><strong>Indexed (default for files):</strong>
+- R-tree index is written between header and features
+- Features are sorted by Hilbert curve value (preserves spatial locality)
+- Enables spatial filtering and HTTP range requests</p>
+<p><strong>Non-indexed (streaming mode):</strong>
+- No index section
+- Features written sequentially as they arrive
+- Used for pipes and progressive output (e.g., writing to stdout)
+- Cannot do spatial filtering — must read all features</p>
+<p>When writing a FlatGeobuf file with tools like GeoPandas or ogr2ogr, the index is created automatically. Non-indexed mode is mainly used in streaming pipelines where the full dataset isn't known upfront.</p>
+<h2 id="when-to-use-flatgeobuf">When to Use FlatGeobuf<a class="headerlink" href="#when-to-use-flatgeobuf" title="Permanent link">&para;</a></h2>
+<h3 id="ideal-for">Ideal for:<a class="headerlink" href="#ideal-for" title="Permanent link">&para;</a></h3>
+<p><strong>Spatial filtering:</strong>
+- "Show me features in this bounding box" as primary query
+- Interactive map panning/zooming
+- Any workflow where you need a spatial subset</p>
+<p><strong>Web mapping:</strong>
+- Serve data directly from static file storage (S3, CDN)
+- No database server needed
+- Client-side spatial filtering via JavaScript</p>
+<p><strong>Cloud-optimized access:</strong>
+- HTTP range requests for partial reads
+- One-time index fetch, then targeted data requests</p>
+<h3 id="not-ideal-for">Not ideal for:<a class="headerlink" href="#not-ideal-for" title="Permanent link">&para;</a></h3>
+<p><strong>Analytics and aggregations:</strong>
+- "Average area by region" requires reading all features anyway
+- Row-based storage reads all columns even if you only need one
+- Use <a href="../geoparquet/">GeoParquet</a> instead</p>
+<p><strong>Frequent updates:</strong>
+- Static index must be rebuilt on changes
+- No append support (must rewrite file)
+- Use <a href="../../databases/postgresql-postgis/">PostgreSQL + PostGIS</a> for live data</p>
+<p><strong>Multi-layer datasets:</strong>
+- One geometry type per file
+- Use <a href="../geopackage/">GeoPackage</a> for packaging multiple layers</p>
+<h2 id="tooling">Tooling<a class="headerlink" href="#tooling" title="Permanent link">&para;</a></h2>
+<h3 id="python-geopandas">Python (GeoPandas)<a class="headerlink" href="#python-geopandas" title="Permanent link">&para;</a></h3>
+<pre><code class="language-python">import geopandas as gpd
+
+# Read all features
+gdf = gpd.read_file(&quot;data.fgb&quot;)
+
+# Spatial filter — uses R-tree index, only reads matching features
+gdf = gpd.read_file(&quot;data.fgb&quot;, bbox=(240000, 6620000, 280000, 6660000))
+
+# Write (index created automatically)
+gdf.to_file(&quot;output.fgb&quot;, driver=&quot;FlatGeobuf&quot;)
+</code></pre>
+<p>GeoPandas loads all matching features into a GeoDataFrame in memory at once. This is not progressive streaming (features aren't yielded one by one), but it does leverage the spatial index to avoid reading non-matching features from disk.</p>
+<p><strong>Spatial pre-filter + analytics pattern:</strong></p>
+<pre><code class="language-python"># 1. Spatial pre-filter: only features in Oslo region
+gdf = gpd.read_file(&quot;registrations.fgb&quot;, bbox=OSLO_BBOX)
+
+# 2. Standard Pandas analytics on the filtered subset
+counts_by_type = gdf[&quot;RASTO_NAVN&quot;].value_counts()
+avg_area = gdf.geometry.area.mean()
+</code></pre>
+<h3 id="javascript-flatgeobuf">JavaScript (flatgeobuf)<a class="headerlink" href="#javascript-flatgeobuf" title="Permanent link">&para;</a></h3>
+<pre><code class="language-javascript">import { deserialize } from &quot;flatgeobuf/geojson&quot;;
+
+// True progressive streaming — features arrive one by one
+const iter = flatgeobuf.deserialize(&quot;https://example.com/data.fgb&quot;, bbox);
+for await (const feature of iter) {
+  map.addFeature(feature); // render each feature as it arrives
+}
+</code></pre>
+<p>The JavaScript library provides true progressive streaming: features are fetched and yielded one by one via HTTP range requests. This is the original use case FlatGeobuf was designed for.</p>
+<h3 id="qgis-gdal">QGIS / GDAL<a class="headerlink" href="#qgis-gdal" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Convert to FlatGeobuf
+ogr2ogr -f FlatGeobuf output.fgb input.gpkg
+
+# Query with spatial filter
+ogr2ogr -f GeoJSON output.json input.fgb -spat xmin ymin xmax ymax
+</code></pre>
+<p>QGIS can open FlatGeobuf files directly and will use the spatial index when zooming/panning.</p>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Row-based with built-in spatial index</strong> — Optimized for spatial queries, not analytics</li>
+<li><strong>Zero-copy reading</strong> — On-disk layout matches memory layout (FlatBuffers)</li>
+<li><strong>No compression</strong> — Deliberate trade-off for read speed</li>
+<li><strong>Cloud-native streaming</strong> — Fetch index once, then targeted range requests</li>
+<li><strong>50x speedup</strong> with bbox filtering in our <a href="../../demo_flatgeobuf_bbox.py">benchmark</a> (dataset-dependent)</li>
+<li><strong>One geometry type per file</strong> — Separate files for points, lines, polygons</li>
+</ol>
+<h2 id="related-topics">Related Topics<a class="headerlink" href="#related-topics" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../concepts/spatial-indexing/">Spatial Indexing</a> — How R-trees enable fast spatial queries</li>
+<li><a href="../../concepts/row-vs-columnar/">Row-Based vs Columnar Storage</a> — Why FlatGeobuf is row-based</li>
+<li><a href="../geoparquet/">GeoParquet</a> — Columnar alternative (better for analytics)</li>
+<li><a href="../geopackage/">GeoPackage</a> — Row-based alternative (better for sharing/multi-layer)</li>
+<li><a href="../">File Formats Overview</a> — Compare all formats</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="http://flatgeobuf.org/">FlatGeobuf Specification</a></li>
+<li><a href="https://flatbuffers.dev/">FlatBuffers Documentation</a></li>
+<li><a href="https://guide.cloudnativegeo.org/flatgeobuf/">Cloud-Native Geospatial — FlatGeobuf Guide</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Hilbert_R-tree#Packed_Hilbert_R-trees">Packed Hilbert R-tree</a></li>
+</ul>
+<!-- Reference-style links -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
