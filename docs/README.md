@@ -2,14 +2,12 @@
 
 A comprehensive guide to understanding geographic data storage, file formats, and database technologies.
 
-## Table of Contents
-
 ### 📚 Core Concepts
 Start here to understand fundamental concepts:
 
-- [Row-Based vs Columnar Storage](concepts/row-vs-columnar.md) - How data is physically organized
-- [Spatial Indexing](concepts/spatial-indexing.md) - How spatial queries are optimized
-- [Vector vs Raster Data](concepts/vector-vs-raster.md) - Different types of geographic data
+- [Row-Based vs Columnar Storage](row-vs-columnar.md) - How data is physically organized
+- [Spatial Indexing](spatial-indexing.md) - How spatial queries are optimized
+- [Databases](databases/README.md) - Storing and managing data
 
 ### 📄 File Formats
 Detailed guides on geographic file formats:

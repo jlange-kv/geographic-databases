@@ -1,0 +1,28 @@
+site_name: geographic-databases
+
+nav:
+  - Index: README.md
+  - Concepts: concepts/README.md
+  - File Formats: file-formats/README.md
+  - Databases: databases/README.md 
+
+theme:
+  name: material
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+
+plugins:
+  - search
+  - autolinks
+
+extra_javascript:
+  - javascripts/katex.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+
+extra_css:
+  - https://unpkg.com/katex@0/dist/katex.min.css

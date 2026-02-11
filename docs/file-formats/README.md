@@ -27,9 +27,7 @@ See: [Row-Based vs Columnar Storage][row-vs-columnar]
 
 ## Format Guide
 
-### Recommended Formats
-
-#### [GeoParquet][geoparquet] - Analytics Powerhouse
+#### [GeoParquet][geoparquet] - Great for Analytics
 
 **Key strengths:**
 - Columnar storage = extremely fast analytical queries
@@ -75,7 +73,7 @@ See: [Row-Based vs Columnar Storage][row-vs-columnar]
 
 ---
 
-#### [FlatGeobuf][flatgeobuf] - Streaming Specialist
+#### [FlatGeobuf][flatgeobuf] - Great for Streaming
 
 **Key strengths:**
 - Built-in R-tree spatial index
@@ -124,7 +122,7 @@ See: [Row-Based vs Columnar Storage][row-vs-columnar]
 
 ### Legacy Formats
 
-#### [Shapefile][shapefile] - Avoid If Possible
+#### [Shapefile][shapefile] - For older systems
 
 **Key limitations:**
 - 2GB file size limit (hard constraint)
