@@ -1,0 +1,22 @@
+performanceOverview: Performance Overview - (To be performed)
+
+readPerformance: Read Performance - (Not yet read-y)
+
+writePerformance: Write Performance - (To be written)
+
+perFormanceDecisionMatrix: Use Cases & Decision Matrix - (To be decided)
+
+databaseOptionsOverview: |-
+    [Database Options Overview](databases/README.md)
+  
+duckDB: |-
+    [DuckDB](databases/duckdb.md) - (Waiting to quack)
+
+cloudOptions: |-
+    Cloud Options - (Still cloudy here)
+
+useCases: |-
+    Use cases - (Not in use)
+  
+flatgeobuffDemo: |-
+    [flatgeobuff demo](https://github.com/jlange-kv/geographic-databases/blob/main/demo_flatgeobuf_bbox.py)

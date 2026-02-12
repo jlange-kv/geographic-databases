@@ -327,8 +327,8 @@ FlatGeobuf (row-based with spatial index)
 - [File Formats Overview][formats] - Which formats use which storage
 - [GeoParquet][geoparquet] - Columnar format details
 - [FlatGeobuf][flatgeobuf] - Row-based with spatial index
-- [Write Performance][write-perf] - Detailed write comparisons
-- [Read Performance][read-perf] - Detailed read comparisons
+- @Snippet:links:writePerformance@ - Detailed write comparisons
+- @Snippet:links:readPerformance@ - Detailed read comparisons
 
 ## References
 
@@ -340,5 +340,3 @@ FlatGeobuf (row-based with spatial index)
 [formats]: ../file-formats/README.md
 [geoparquet]: ../file-formats/geoparquet.md
 [flatgeobuf]: ../file-formats/flatgeobuf.md
-[write-perf]: ../performance/write-performance.md
-[read-perf]: ../performance/read-performance.md

@@ -117,7 +117,7 @@ See [Spatial Indexing — FlatGeobuf Streaming][spatial-indexing-streaming] for 
 
 Using GeoPandas with a `bbox` parameter (see [Tooling — Python](#python-geopandas) for code), the reader consults the R-tree index and only reads features whose bounding box intersects the query area.
 
-**Results** from [demo_flatgeobuf_bbox.py][demo-bbox] on Norwegian mining registration data (EPSG:25833):
+**Results** from @Snippet:links:flatgeobuffDemo@ on Norwegian mining registration data (EPSG:25833):
 
 ```
 Full read:    6562 features in 0.0701s

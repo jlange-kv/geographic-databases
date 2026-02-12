@@ -1,15 +1,16 @@
-# Geographic Data Storage - Learning Documentation
+# Geographic Data Storage - Overview
 
-A comprehensive guide to understanding geographic data storage, file formats, and database technologies.
+A guide to understanding geographic data storage, file formats, and database technologies.
 
-### 📚 Core Concepts
+### Core Concepts
 Start here to understand fundamental concepts:
 
 - [Row-Based vs Columnar Storage](row-vs-columnar.md) - How data is physically organized
 - [Spatial Indexing](spatial-indexing.md) - How spatial queries are optimized
 - [Databases](databases/README.md) - Storing and managing data
+- [Query performance and database design](query-performance.md) - Optimising the performance of a database
 
-### 📄 File Formats
+### File Formats
 Detailed guides on geographic file formats:
 
 - [File Formats Overview](file-formats/README.md) - Comparison and decision guide
@@ -19,30 +20,29 @@ Detailed guides on geographic file formats:
 - [FlatGeobuf](file-formats/flatgeobuf.md) - Streaming spatial format
 - [GeoJSON](file-formats/geojson.md) - Web-friendly format
 
-### ⚡ Performance
+### Performance
 Understanding performance characteristics:
 
-- [Performance Overview](performance/README.md) - Summary and recommendations
-- [Read Performance](performance/read-performance.md) - Query speed comparisons
-- [Write Performance](performance/write-performance.md) - Insert/update/delete speed
-- [Use Cases & Decision Matrix](performance/use-cases.md) - Which format for which scenario
+- @Snippet:links:performanceOverview@ - Summary and recommendations
+- @Snippet:links:readPerformance@ - Query speed comparisons
+- @Snippet:links:writePerformance@ - Insert/update/delete speed
+- @Snippet:links:perFormanceDecisionMatrix@ - Which format for which scenario
 
-### 🗄️ Databases
+### Databases
 Database technologies for geographic data:
 
-- [Database Options Overview](databases/README.md) - Comparison of database systems
+- @Snippet:links:databaseOptionsOverview@ - Comparison of database systems
 - [PostgreSQL + PostGIS](databases/postgresql-postgis.md) - Production-grade spatial database
-- [DuckDB](databases/duckdb.md) - Analytical database for data exploration
-- [Cloud Options](databases/cloud-options.md) - AWS, GCP, Azure spatial services
-
+- @Snippet:links:duckDB@ - Analytical database for data exploration
+- @Snippet:links:cloudOptions@ - AWS, GCP, Azure spatial services
 ## Quick Navigation
 
 ### By Use Case
 
 - **Learning & Exploration** → [DuckDB](databases/duckdb.md) + [GeoParquet](file-formats/geoparquet.md)
 - **Production Applications** → [PostgreSQL + PostGIS](databases/postgresql-postgis.md)
-- **Data Analytics** → [GeoParquet](file-formats/geoparquet.md) + [Read Performance](performance/read-performance.md)
-- **Frequent Updates** → [PostgreSQL + PostGIS](databases/postgresql-postgis.md) + [Write Performance](performance/write-performance.md)
+- **Data Analytics** → [GeoParquet](file-formats/geoparquet.md) + @Snippet:links:readPerformance@
+- **Frequent Updates** → [PostgreSQL + PostGIS](databases/postgresql-postgis.md) + @Snippet:links:writePerformance@
 - **Web Mapping** → [FlatGeobuf](file-formats/flatgeobuf.md) or [GeoJSON](file-formats/geojson.md)
 - **Data Sharing** → [GeoPackage](file-formats/geopackage.md)
 
@@ -50,12 +50,6 @@ Database technologies for geographic data:
 
 - "Which format should I use?" → [File Formats Overview](file-formats/README.md)
 - "Why are my queries slow?" → [Spatial Indexing](concepts/spatial-indexing.md)
-- "How do I handle real-time data?" → [Write Performance](performance/write-performance.md)
+- "How do I handle real-time data?" → @Snippet:links:writePerformance@
 - "What's the difference between row and column storage?" → [Row-Based vs Columnar Storage](concepts/row-vs-columnar.md)
-- "Which database for cloud deployment?" → [Cloud Options](databases/cloud-options.md)
-
-## About This Documentation
-
-This documentation was created as a learning resource for understanding geographic data storage technologies. It covers theoretical concepts, practical implementations, and performance considerations to help make informed decisions about data architecture.
-
-**Last Updated:** 2026-02-04
+- "Which database for cloud deployment?" → @Snippet:links:cloudOptions@

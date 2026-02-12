@@ -166,9 +166,9 @@ For raster-focused work, see: [Vector vs Raster Data][vector-vs-raster]
 - [Decision Tree][decision-tree] - Quick format selection guide
 - [Row-Based vs Columnar Storage][row-vs-columnar] - Fundamental storage concepts
 - [Spatial Indexing][spatial-index] - How spatial queries are optimized
-- [Read Performance][read-perf] - Benchmarks and query speed
-- [Write Performance][write-perf] - Insert/update/delete speed
-- [Use Cases][use-cases] - Real-world scenario patterns
+- @Snippet:links:readPerformance@ - Benchmarks and query speed
+- @Snippet:links:writePerformance@ - Insert/update/delete speed
+- @Snippet:links:useCases@ - Real-world scenario patterns
 - [Database Options][databases] - When to use databases vs files
 
 <!-- Reference-style links -->
@@ -180,10 +180,6 @@ For raster-focused work, see: [Vector vs Raster Data][vector-vs-raster]
 [shapefile]: shapefile.md
 [row-vs-columnar]: ../concepts/row-vs-columnar.md
 [spatial-index]: ../concepts/spatial-indexing.md
-[vector-vs-raster]: ../concepts/vector-vs-raster.md
-[read-perf]: ../performance/read-performance.md
-[write-perf]: ../performance/write-performance.md
-[use-cases]: ../performance/use-cases.md
 [databases]: ../databases/README.md
 [duckdb]: ../databases/duckdb.md
 [postgis]: ../databases/postgresql-postgis.md

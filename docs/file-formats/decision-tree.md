@@ -96,8 +96,7 @@ What is your primary use case?
 
 ---
 
-**Related:** [File Formats Overview][overview] • [Performance Comparisons][performance] • [Database Options][databases]
+**Related:** [File Formats Overview][overview] • @Snippet:links:performanceOverview@ • [Database Options][databases]
 
 [overview]: README.md
-[performance]: ../performance/README.md
 [databases]: ../databases/README.md

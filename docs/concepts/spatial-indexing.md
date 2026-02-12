@@ -247,13 +247,20 @@ This is why FlatGeobuf is called a "cloud-native" format - you can work with mas
 - Usually small relative to total data (as shown in example above)
 
 **Build time:**
-- Creating index takes time (one-time cost)
-- Must rebuild if data changes significantly
 
-**Update complexity:**
-- Inserting/updating features requires updating index
-- Can be expensive for columnar formats
-- Row-based databases (PostGIS) handle this efficiently
+Building an R-tree from scratch is **O(n log n)**, the same complexity class as building a B-tree (see [B-tree Lookup](relational-databases.md#b-tree-lookup)).
+
+A naive construction can create trees that are still slow, but in practice, spatial tools use **bulk loading**: sort the data spatially first then build the tree bottom-up, filling leaves with spatially adjacent features. The sort is O(n log n), the tree construction after sorting is O(n), so the total is still O(n log n) but produces a much better tree with less bounding box overlap. This is what FlatGeobuf does at file creation and what PostGIS does with `CREATE INDEX ... USING GIST`.
+
+**Inserting into an existing R-tree:**
+
+Inserting a single element is **O(log n)**, same as a B-tree. But more expensive in practice — at each level the algorithm must compare bounding box enlargements to decide which child to descend into (not just a simple left-or-right comparison), and node splits require minimizing overlap between the resulting bounding boxes.
+
+If the table has multiple indexes (spatial + attribute), each insert must update all of them independently.
+
+**Immutable file formats:**
+
+For file-based formats like FlatGeobuf, the R-tree is static. You can't insert into it without rebuilding the entire file. This is fine for "write once, read many" use cases. PostGIS indexes, by contrast, update dynamically on every insert.
 
 ## When Spatial Indexes Matter
 

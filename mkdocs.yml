@@ -1,11 +1,5 @@
 site_name: geographic-databases
 
-nav:
-  - Index: README.md
-  - Concepts: concepts/README.md
-  - File Formats: file-formats/README.md
-  - Databases: databases/README.md 
-
 theme:
   name: material
 
@@ -18,6 +12,10 @@ markdown_extensions:
 plugins:
   - search
   - autolinks
+  - exclude:
+      glob:
+        - snippets/*
+  - snippets
 
 extra_javascript:
   - javascripts/katex.js
