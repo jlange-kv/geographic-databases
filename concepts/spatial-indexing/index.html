@@ -302,6 +302,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../query-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Query Performance and Database Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../row-vs-columnar/" class="md-nav__link">
         
   
@@ -1616,13 +1644,14 @@ User pans to different area:
 <p><strong>Storage:</strong>
 - Index adds overhead to file size
 - Usually small relative to total data (as shown in example above)</p>
-<p><strong>Build time:</strong>
-- Creating index takes time (one-time cost)
-- Must rebuild if data changes significantly</p>
-<p><strong>Update complexity:</strong>
-- Inserting/updating features requires updating index
-- Can be expensive for columnar formats
-- Row-based databases (PostGIS) handle this efficiently</p>
+<p><strong>Build time:</strong></p>
+<p>Building an R-tree from scratch is <strong>O(n log n)</strong>, the same complexity class as building a B-tree (see <a href="../../databases/relational-databases/#b-tree-lookup">B-tree Lookup</a>).</p>
+<p>A naive construction can create trees that are still slow, but in practice, spatial tools use <strong>bulk loading</strong>: sort the data spatially first then build the tree bottom-up, filling leaves with spatially adjacent features. The sort is O(n log n), the tree construction after sorting is O(n), so the total is still O(n log n) but produces a much better tree with less bounding box overlap. This is what FlatGeobuf does at file creation and what PostGIS does with <code>CREATE INDEX ... USING GIST</code>.</p>
+<p><strong>Inserting into an existing R-tree:</strong></p>
+<p>Inserting a single element is <strong>O(log n)</strong>, same as a B-tree. But more expensive in practice — at each level the algorithm must compare bounding box enlargements to decide which child to descend into (not just a simple left-or-right comparison), and node splits require minimizing overlap between the resulting bounding boxes.</p>
+<p>If the table has multiple indexes (spatial + attribute), each insert must update all of them independently.</p>
+<p><strong>Immutable file formats:</strong></p>
+<p>For file-based formats like FlatGeobuf, the R-tree is static. You can't insert into it without rebuilding the entire file. This is fine for "write once, read many" use cases. PostGIS indexes, by contrast, update dynamically on every insert.</p>
 <h2 id="when-spatial-indexes-matter">When Spatial Indexes Matter<a class="headerlink" href="#when-spatial-indexes-matter" title="Permanent link">&para;</a></h2>
 <h3 id="essential-for">Essential for:<a class="headerlink" href="#essential-for" title="Permanent link">&para;</a></h3>
 <p><strong>Large datasets:</strong>

@@ -300,6 +300,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../concepts/query-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Query Performance and Database Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../concepts/row-vs-columnar/" class="md-nav__link">
         
   
@@ -1459,7 +1487,7 @@ FlatGeobuf:  Larger file → Use directly
 </ol>
 <h3 id="spatial-filtering-benchmark">Spatial Filtering Benchmark<a class="headerlink" href="#spatial-filtering-benchmark" title="Permanent link">&para;</a></h3>
 <p>Using GeoPandas with a <code>bbox</code> parameter (see <a href="#python-geopandas">Tooling — Python</a> for code), the reader consults the R-tree index and only reads features whose bounding box intersects the query area.</p>
-<p><strong>Results</strong> from <a href="../../demo_flatgeobuf_bbox.py">demo_flatgeobuf_bbox.py</a> on Norwegian mining registration data (EPSG:25833):</p>
+<p><strong>Results</strong> from <a href="https://github.com/jlange-kv/geographic-databases/blob/main/demo_flatgeobuf_bbox.py">flatgeobuff demo</a> on Norwegian mining registration data (EPSG:25833):</p>
 <pre><code>Full read:    6562 features in 0.0701s
 Bbox read:       9 features in 0.0014s
 

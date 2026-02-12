@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../query-performance/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../spatial-indexing/">
+        <link rel="next" href="../row-vs-columnar/">
       
       
         
@@ -23,7 +23,7 @@
     
     
       
-        <title>Row-Based vs Columnar Storage - geographic-databases</title>
+        <title>Query Performance and Database Design - geographic-databases</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#row-based-vs-columnar-storage" class="md-skip">
+        <a href="#query-performance-and-database-design" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Row-Based vs Columnar Storage
+              Query Performance and Database Design
             
           </span>
         </div>
@@ -299,34 +299,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../query-performance/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Query Performance and Database Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -346,7 +318,7 @@
   <span class="md-ellipsis">
     
   
-    Row-Based vs Columnar Storage
+    Query Performance and Database Design
   
 
     
@@ -364,7 +336,7 @@
   <span class="md-ellipsis">
     
   
-    Row-Based vs Columnar Storage
+    Query Performance and Database Design
   
 
     
@@ -390,33 +362,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-core-difference" class="md-nav__link">
+  <a href="#indexes-why-they-matter" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Core Difference
+        Indexes: Why They Matter
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="The Core Difference">
+    <nav class="md-nav" aria-label="Indexes: Why They Matter">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#row-based-storage" class="md-nav__link">
+  <a href="#the-cost-of-indexes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Row-Based Storage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#columnar-storage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Columnar Storage
+        The Cost of Indexes
       
     </span>
   </a>
@@ -429,6 +390,68 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#spatial-indexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spatial Indexes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Spatial Indexes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#index-cost-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index Cost Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-stage-spatial-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two-Stage Spatial Filtering
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Two-Stage Spatial Filtering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stage-1-bounding-box-filter-cheap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 1: Bounding Box Filter (cheap)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stage-2-exact-geometry-test-expensive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 2: Exact Geometry Test (expensive)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#why-this-matters" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -437,62 +460,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Why This Matters">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#when-row-based-is-faster-getting-complete-records" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When Row-Based is Faster: Getting Complete Records
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#when-columnar-is-faster-analytical-queries" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When Columnar is Faster: Analytical Queries
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#writing-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Writing Data
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#compression" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Compression
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#updates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Updates
-      
-    </span>
-  </a>
-  
 </li>
         
       </ul>
@@ -501,10 +468,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#performance-summary" class="md-nav__link">
+  <a href="#select-only-what-you-need" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Performance Summary
+        SELECT Only What You Need
       
     </span>
   </a>
@@ -512,80 +479,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-to-use-each" class="md-nav__link">
+  <a href="#combined-filters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        When to Use Each
+        Combined Filters
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="When to Use Each">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#use-row-based-storage-when" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use Row-Based Storage When:
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#use-columnar-storage-when" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use Columnar Storage When:
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#real-world-patterns" class="md-nav__link">
+  <a href="#explain-checking-your-query-plan" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Real-World Patterns
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Real-World Patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pattern-1-hybrid-architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pattern 1: Hybrid Architecture
+        EXPLAIN: Checking Your Query Plan
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#pattern-2-format-conversion" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#table-design-tips" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pattern 2: Format Conversion
+        Table Design Tips
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -626,6 +548,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../row-vs-columnar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Row-Based vs Columnar Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1109,33 +1059,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-core-difference" class="md-nav__link">
+  <a href="#indexes-why-they-matter" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Core Difference
+        Indexes: Why They Matter
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="The Core Difference">
+    <nav class="md-nav" aria-label="Indexes: Why They Matter">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#row-based-storage" class="md-nav__link">
+  <a href="#the-cost-of-indexes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Row-Based Storage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#columnar-storage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Columnar Storage
+        The Cost of Indexes
       
     </span>
   </a>
@@ -1148,6 +1087,68 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#spatial-indexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spatial Indexes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Spatial Indexes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#index-cost-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index Cost Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-stage-spatial-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two-Stage Spatial Filtering
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Two-Stage Spatial Filtering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stage-1-bounding-box-filter-cheap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 1: Bounding Box Filter (cheap)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stage-2-exact-geometry-test-expensive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 2: Exact Geometry Test (expensive)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#why-this-matters" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1156,62 +1157,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Why This Matters">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#when-row-based-is-faster-getting-complete-records" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When Row-Based is Faster: Getting Complete Records
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#when-columnar-is-faster-analytical-queries" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When Columnar is Faster: Analytical Queries
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#writing-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Writing Data
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#compression" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Compression
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#updates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Updates
-      
-    </span>
-  </a>
-  
 </li>
         
       </ul>
@@ -1220,10 +1165,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#performance-summary" class="md-nav__link">
+  <a href="#select-only-what-you-need" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Performance Summary
+        SELECT Only What You Need
       
     </span>
   </a>
@@ -1231,80 +1176,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-to-use-each" class="md-nav__link">
+  <a href="#combined-filters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        When to Use Each
+        Combined Filters
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="When to Use Each">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#use-row-based-storage-when" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use Row-Based Storage When:
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#use-columnar-storage-when" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use Columnar Storage When:
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#real-world-patterns" class="md-nav__link">
+  <a href="#explain-checking-your-query-plan" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Real-World Patterns
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Real-World Patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pattern-1-hybrid-architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pattern 1: Hybrid Architecture
+        EXPLAIN: Checking Your Query Plan
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#pattern-2-format-conversion" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#table-design-tips" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pattern 2: Format Conversion
+        Table Design Tips
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1358,322 +1258,177 @@
 
 
 
-<h1 id="row-based-vs-columnar-storage">Row-Based vs Columnar Storage<a class="headerlink" href="#row-based-vs-columnar-storage" title="Permanent link">&para;</a></h1>
-<p>Understanding how data is physically organized on disk is fundamental to choosing the right storage format.</p>
-<h2 id="the-core-difference">The Core Difference<a class="headerlink" href="#the-core-difference" title="Permanent link">&para;</a></h2>
-<h3 id="row-based-storage">Row-Based Storage<a class="headerlink" href="#row-based-storage" title="Permanent link">&para;</a></h3>
-<p>Data is stored <strong>feature-by-feature</strong> (row-by-row):</p>
-<pre><code>Imagine a table of cities:
-┌────┬────────┬─────────┬────────────┬──────────────────┐
-│ id │  name  │ country │ population │     geometry     │
-├────┼────────┼─────────┼────────────┼──────────────────┤
-│ 1  │ Paris  │ France  │ 2,161,000  │ POINT(2.35 48.86)│
-│ 2  │ London │ UK      │ 8,982,000  │ POINT(-0.12 51.5)│
-│ 3  │ Berlin │ Germany │ 3,645,000  │ POINT(13.4 52.5) │
-└────┴────────┴─────────┴────────────┴──────────────────┘
-
-On disk (row-based):
-Block 1: [1|Paris|France|2161000|POINT(...)]
-Block 2: [2|London|UK|8982000|POINT(...)]
-Block 3: [3|Berlin|Germany|3645000|POINT(...)]
+<h1 id="query-performance-and-database-design">Query Performance and Database Design<a class="headerlink" href="#query-performance-and-database-design" title="Permanent link">&para;</a></h1>
+<p>This page covers how to write efficient queries and design tables for geographic data. It builds on concepts from <a href="../../databases/relational-databases/">Relational Databases</a> (B-tree lookups, row vs column engines) and <a href="../spatial-indexing/">Spatial Indexing</a> (R-tree, bounding box filtering).</p>
+<h2 id="indexes-why-they-matter">Indexes: Why They Matter<a class="headerlink" href="#indexes-why-they-matter" title="Permanent link">&para;</a></h2>
+<p>In <a href="../../databases/relational-databases/#b-tree-lookup">Relational Databases</a> we saw that a primary key gets an automatic B-tree index, turning row lookups from O(n) full table scans into O(log n) tree traversals. But primary keys aren't the only columns you filter by.</p>
+<p>Consider the buildings table:</p>
+<pre><code class="language-sql">SELECT name, area FROM buildings WHERE type = 'commercial';
 </code></pre>
-<p>Each disk block contains <strong>all attributes</strong> for one feature.</p>
-<h3 id="columnar-storage">Columnar Storage<a class="headerlink" href="#columnar-storage" title="Permanent link">&para;</a></h3>
-<p>Data is stored <strong>attribute-by-attribute</strong> (column-by-column):</p>
-<pre><code>Same table, different organization:
-
-On disk (columnar):
-Block 1 (id):         [1|2|3]
-Block 2 (name):       [Paris|London|Berlin]
-Block 3 (country):    [France|UK|Germany]
-Block 4 (population): [2161000|8982000|3645000]
-Block 5 (geometry):   [POINT(...)|POINT(...)|POINT(...)]
+<p>Without an index on <code>type</code>, the database scans every row and checks if <code>type = 'commercial'</code>. For 1 million buildings, that means reading 1 million rows to find maybe 50,000 commercial ones.</p>
+<p>You can create an index on any column:</p>
+<pre><code class="language-sql">CREATE INDEX idx_buildings_type ON buildings(type);
 </code></pre>
-<p>Each disk block contains <strong>one attribute</strong> for all features.</p>
-<h2 id="why-this-matters">Why This Matters<a class="headerlink" href="#why-this-matters" title="Permanent link">&para;</a></h2>
-<p>The storage layout dramatically affects performance for different operations.</p>
-<h3 id="when-row-based-is-faster-getting-complete-records">When Row-Based is Faster: Getting Complete Records<a class="headerlink" href="#when-row-based-is-faster-getting-complete-records" title="Permanent link">&para;</a></h3>
-<p><strong>Query: "Get all information about Paris"</strong></p>
-<p><strong>Row-based approach:</strong></p>
-<pre><code>1. Use index to find: name = &quot;Paris&quot; → Block 1
-2. Read Block 1: [1|Paris|France|2161000|POINT(...)]
-3. Return all attributes
+<p>Now the database builds a separate B-tree on the <code>type</code> column. The query becomes:</p>
+<ol>
+<li>Look up 'commercial' in the B-tree — O(log n), a few page reads</li>
+<li>Get a list of row IDs that match</li>
+<li>Fetch only those rows</li>
+</ol>
+<p>The same principle applies to numeric filters:</p>
+<pre><code class="language-sql">CREATE INDEX idx_buildings_area ON buildings(area);
 
-Blocks read: 1
-Result: Fast
+-- Now this uses the index instead of scanning every row
+SELECT name FROM buildings WHERE area &gt; 1000;
 </code></pre>
-<p><strong>Columnar approach:</strong></p>
-<pre><code>1. Scan name column to find &quot;Paris&quot; → position 1
-2. Read from id column, position 1 → 1
-3. Read from name column, position 1 → &quot;Paris&quot;
-4. Read from country column, position 1 → &quot;France&quot;
-5. Read from population column, position 1 → 2161000
-6. Read from geometry column, position 1 → POINT(...)
-
-Blocks read: 5 (one per column)
-Result: Slower
+<h3 id="the-cost-of-indexes">The Cost of Indexes<a class="headerlink" href="#the-cost-of-indexes" title="Permanent link">&para;</a></h3>
+<p>Building a B-tree index from scratch is <strong>O(n log n)</strong> — each of the n values must be inserted into the tree, and each insertion traverses O(log n) levels to find the right leaf.</p>
+<p>Once the index exists, each INSERT into the table must also insert into the B-tree index with a cost of <strong>O(log n)</strong> per insert. This scales linearly with the number of filters.</p>
+<p>The indices in addition take up some storage but not much.</p>
+<h2 id="spatial-indexes">Spatial Indexes<a class="headerlink" href="#spatial-indexes" title="Permanent link">&para;</a></h2>
+<p>PostGIS uses <strong>GiST indexes</strong> (Generalized Search Trees) — PostgreSQL's framework for building R-tree-like structures. The concept is the same as covered in <a href="../spatial-indexing/">Spatial Indexing</a>: hierarchical bounding boxes that let you prune entire branches of data.</p>
+<pre><code class="language-sql">CREATE INDEX idx_buildings_geom ON buildings USING GIST (geom);
 </code></pre>
-<p><strong>The principle:</strong> When you need <strong>all attributes</strong> for specific records, row-based storage retrieves them in <strong>one block read</strong>. Columnar storage must read from <strong>every column</strong> separately.</p>
-<h3 id="when-columnar-is-faster-analytical-queries">When Columnar is Faster: Analytical Queries<a class="headerlink" href="#when-columnar-is-faster-analytical-queries" title="Permanent link">&para;</a></h3>
-<p><strong>Query: "What is the average population?"</strong></p>
-<p><strong>Row-based approach:</strong></p>
-<pre><code>1. Read Block 1: [1|Paris|France|2161000|POINT(...)]
-   → Extract: 2161000
-2. Read Block 2: [2|London|UK|8982000|POINT(...)]
-   → Extract: 8982000
-3. Read Block 3: [3|Berlin|Germany|3645000|POINT(...)]
-   → Extract: 3645000
-4. Calculate average
-
-Blocks read: ALL blocks (entire table)
-Wasted I/O: id, name, country, geometry (not needed!)
-</code></pre>
-<p><strong>Columnar approach:</strong></p>
-<pre><code>1. Read Block 4 (population): [2161000|8982000|3645000]
-2. Calculate average
-
-Blocks read: ONLY population block
-Wasted I/O: None
-</code></pre>
-<p><strong>The principle:</strong> Columnar storage lets you read <strong>only the columns you need</strong>. Row-based storage forces you to read <strong>entire rows</strong> even if you only want one attribute.</p>
-<p>For 1 million cities, columnar might read 1 block while row-based reads 1 million blocks.</p>
-<h3 id="writing-data">Writing Data<a class="headerlink" href="#writing-data" title="Permanent link">&para;</a></h3>
-<p><strong>Operation: Insert one new city</strong></p>
-<p><strong>Row-based approach:</strong></p>
-<pre><code>1. Create new row: [4|Madrid|Spain|3223000|POINT(...)]
-2. Append to end of file (or insert into B-tree)
-3. Update index with new entry
-
-Blocks modified: 1 (plus index update)
-Time: Fast (milliseconds)
-</code></pre>
-<p><strong>Columnar approach:</strong></p>
-<pre><code>1. Open id column → append 4 → close
-2. Open name column → append &quot;Madrid&quot; → close
-3. Open country column → append &quot;Spain&quot; → close
-4. Open population column → append 3223000 → close
-5. Open geometry column → append POINT(...) → close
-
-Blocks modified: 5 (one per column)
-Time: Slower (must touch every column)
-</code></pre>
-<p><strong>The principle:</strong> Row-based storage writes <strong>one block</strong> for one record. Columnar storage must modify <strong>every column</strong> for one record.</p>
-<p>This gets worse with compression (explained below).</p>
-<h3 id="compression">Compression<a class="headerlink" href="#compression" title="Permanent link">&para;</a></h3>
-<p>This is where columnar storage truly shines.</p>
-<p><strong>Why columnar compresses better:</strong></p>
-<p>Imagine a country column with many cities:</p>
-<p><strong>Row-based (mixed data in each block):</strong></p>
-<pre><code>Block 1: [1|Paris|France|2161000|POINT(...)]
-Block 2: [2|Lyon|France|513000|POINT(...)]
-Block 3: [3|London|UK|8982000|POINT(...)]
-...
-
-Compression challenge: Each block has mixed data types
-- Integer (id)
-- String (names - all different)
-- String (countries - repeated but scattered)
-- Integer (populations - all different)
-- Complex type (geometries - all different)
-
-Result: Difficult to find compression patterns
-</code></pre>
-<p><strong>Columnar (similar data together):</strong></p>
-<pre><code>Country column:
-[France|France|France|France|UK|UK|UK|Germany|Germany|Germany|...]
-
-Compression opportunity:
-    Original: [&quot;France&quot;, &quot;France&quot;, &quot;France&quot;, &quot;France&quot;, &quot;UK&quot;, &quot;UK&quot;, &quot;UK&quot;, ...]
-
-    Dictionary + encoding:
-    - Dictionary: {0: &quot;France&quot;, 1: &quot;UK&quot;, 2: &quot;Germany&quot;}
-    - Data: [0, 0, 0, 0, 1, 1, 1, 2, 2, 2, ...]
-
-    Further compression (run-length):
-    - [0×4, 1×3, 2×3, ...]
-
-Comparison:
-    [&quot;France&quot;×1000, &quot;UK&quot;×500, ...] vs Dictionary + [0×1000, 1×500, ...]
-
-    UTF-8 string &quot;France&quot; = ~6 bytes × 1000 = ~6000 bytes
-    Single byte 0 = 1 byte × 1000 = 1000 bytes + small dictionary
-    (Since &lt;255 countries exist, we can encode each with 1 byte)
-
-Result: Much smaller for large datasets. Roughly 83% compression in this case.
-</code></pre>
-<p><strong>The principle:</strong> Storing <strong>similar values together</strong> enables powerful compression techniques:
-- Dictionary encoding (replace repeated strings with small integers)
-- Run-length encoding (store value once, then "repeated N times")
-- Bit-packing (integers with limited range)</p>
-<p>Mixed data types in row-based storage can't exploit these patterns as effectively.</p>
-<h3 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h3>
-<p><strong>Operation: Change population of London from 8,982,000 to 9,000,000</strong></p>
-<p><strong>Row-based:</strong></p>
-<pre><code>1. Find row (using index): [2|London|UK|8982000|POINT(...)]
-2. Modify in place: [2|London|UK|9000000|POINT(...)]
-3. Update affected indexes
-
-Blocks modified: 1
-Time: Fast (milliseconds)
-</code></pre>
-<p><strong>Columnar:</strong></p>
-<pre><code>Option A: Modify in place
-1. Find position in population column (position 2)
-2. Decompress block containing position 2
-3. Change value: 8982000 → 9000000
-4. Recompress entire block
-5. Write back to disk
-
-Problem: If compressed with dictionary/run-length encoding,
-changing one value may require recompressing large chunks.
-
-Option B: Rewrite file (common in practice)
-1. Read entire file
-2. Modify value
-3. Write new file
-4. Replace old file
-
-Blocks modified: Potentially all blocks
-Time: Slow (seconds for large files)
-</code></pre>
-<p><strong>The principle:</strong> Row-based storage can modify <strong>one record</strong> easily. Columnar storage with compression makes single-record updates expensive, often requiring <strong>rewriting entire column blocks</strong>.</p>
-<p>This is why GeoParquet is effectively <strong>immutable</strong> in practice.</p>
-<h2 id="performance-summary">Performance Summary<a class="headerlink" href="#performance-summary" title="Permanent link">&para;</a></h2>
+<p>Key difference from file-based indexes like FlatGeobuf's R-tree:</p>
+<ul>
+<li><strong>Dynamic:</strong> Insert a new feature and the index updates automatically</li>
+<li><strong>Multiple indexes:</strong> Create indexes on any column; the query planner combines them</li>
+<li><strong>No rebuild needed:</strong> FlatGeobuf's index is static (baked at file creation); PostGIS indexes adapt to changes</li>
+</ul>
+<p>Building an R-tree has the same O(n log n) complexity as a B-tree, and inserting a single element is O(log n) — but with higher constant factors because 2D bounding box comparisons are more involved than 1D value comparisons. See <a href="../spatial-indexing/#costs">Spatial Indexing — Build time</a> for the details on how R-trees are constructed.</p>
+<h3 id="index-cost-summary">Index Cost Summary<a class="headerlink" href="#index-cost-summary" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
 <th>Operation</th>
-<th>Row-Based</th>
-<th>Columnar</th>
-<th>Winner</th>
+<th>B-tree</th>
+<th>R-tree</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Read full record</strong></td>
-<td>Fast (1 block)</td>
-<td>Slow (N blocks for N columns)</td>
-<td>Row-based</td>
+<td><strong>Build from scratch</strong></td>
+<td>O(n log n)</td>
+<td>O(n log n)</td>
 </tr>
 <tr>
-<td><strong>Read one attribute across many records</strong></td>
-<td>Slow (read all, extract one)</td>
-<td>Fast (1 block)</td>
-<td>Columnar</td>
+<td><strong>Insert one element</strong></td>
+<td>O(log n)</td>
+<td>O(log n)</td>
 </tr>
 <tr>
-<td><strong>Analytical query</strong> (avg, sum, filter)</td>
-<td>Slow (scan all data)</td>
-<td>Fast (read only needed columns)</td>
-<td>Columnar</td>
-</tr>
-<tr>
-<td><strong>Insert one record</strong></td>
-<td>Fast (append 1 block)</td>
-<td>Slow (append to all columns)</td>
-<td>Row-based</td>
-</tr>
-<tr>
-<td><strong>Update one record</strong></td>
-<td>Fast (modify 1 block)</td>
-<td>Very slow (recompress/rewrite)</td>
-<td>Row-based</td>
-</tr>
-<tr>
-<td><strong>Delete one record</strong></td>
-<td>Fast (mark deleted)</td>
-<td>Very slow (rewrite file)</td>
-<td>Row-based</td>
-</tr>
-<tr>
-<td><strong>Compression ratio</strong></td>
-<td>Lower (mixed data types)</td>
-<td>Higher (similar values together)</td>
-<td>Columnar</td>
-</tr>
-<tr>
-<td><strong>Spatial query</strong></td>
-<td>Medium (with spatial index)</td>
-<td>Slower (less optimized for spatial)</td>
-<td>Row-based*</td>
+<td><strong>Insert with k indexes</strong></td>
+<td>O(k × log n)</td>
+<td>same principle</td>
 </tr>
 </tbody>
 </table>
-<p>*With proper spatial indexing like FlatGeobuf's R-tree</p>
-<h2 id="when-to-use-each">When to Use Each<a class="headerlink" href="#when-to-use-each" title="Permanent link">&para;</a></h2>
-<h3 id="use-row-based-storage-when">Use Row-Based Storage When:<a class="headerlink" href="#use-row-based-storage-when" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Frequent writes/updates/deletes</strong> - Transactional workloads (OLTP)</li>
-<li><strong>Need complete records</strong> - "Get all info for user #12345"</li>
-<li><strong>Spatial filtering is primary</strong> - "Features in this bounding box"</li>
-<li><strong>Real-time data collection</strong> - Sensor data, logs, continuous updates</li>
-</ul>
-<p><strong>Examples:</strong>
-- PostgreSQL + PostGIS (production database)
-- FlatGeobuf (web mapping with spatial index)
-- GeoPackage (general-purpose sharing)</p>
-<h3 id="use-columnar-storage-when">Use Columnar Storage When:<a class="headerlink" href="#use-columnar-storage-when" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Analytical queries</strong> - Aggregations, statistics, filtering by attributes</li>
-<li><strong>Read-heavy workloads</strong> - "Write once, read many" (OLAP)</li>
-<li><strong>Need efficient compression</strong> - Bandwidth/storage constraints</li>
-<li><strong>Cloud storage</strong> - Minimize data transfer costs</li>
-<li><strong>Large datasets</strong> - Millions to billions of records</li>
-</ul>
-<p><strong>Examples:</strong>
-- GeoParquet (data science, analytics)
-- Data warehouses (BigQuery, Snowflake)
-- Analytical databases (DuckDB, ClickHouse)</p>
-<h2 id="real-world-patterns">Real-World Patterns<a class="headerlink" href="#real-world-patterns" title="Permanent link">&para;</a></h2>
-<h3 id="pattern-1-hybrid-architecture">Pattern 1: Hybrid Architecture<a class="headerlink" href="#pattern-1-hybrid-architecture" title="Permanent link">&para;</a></h3>
-<p>Many systems use <strong>both</strong> strategically:</p>
-<pre><code>Live Data (changing frequently)
-    ↓
-PostgreSQL + PostGIS (row-based)
-    ↓ Export nightly
-GeoParquet in Data Lake (columnar)
-    ↓ Analytics
-Reports &amp; Dashboards
+<h2 id="two-stage-spatial-filtering">Two-Stage Spatial Filtering<a class="headerlink" href="#two-stage-spatial-filtering" title="Permanent link">&para;</a></h2>
+<p>This is the core geographic-specific performance concept.</p>
+<p>When you write a spatial query like:</p>
+<pre><code class="language-sql">SELECT name FROM buildings WHERE ST_Intersects(geom, search_area);
 </code></pre>
-<p><strong>Why:</strong> Optimize for different access patterns
-- PostgreSQL: Fast writes for live updates
-- GeoParquet: Fast analytics on historical data</p>
-<h3 id="pattern-2-format-conversion">Pattern 2: Format Conversion<a class="headerlink" href="#pattern-2-format-conversion" title="Permanent link">&para;</a></h3>
-<p>Start with one, convert for different uses:</p>
-<pre><code>Survey Data Collection
-    ↓
-GeoPackage (row-based, easy sharing)
-    ↓ Convert for analysis
-GeoParquet (columnar analytics)
-    ↓ Convert for web map
-FlatGeobuf (row-based with spatial index)
+<p>It looks like one operation, but the database actually does <strong>two stages</strong>:</p>
+<h3 id="stage-1-bounding-box-filter-cheap">Stage 1: Bounding Box Filter (cheap)<a class="headerlink" href="#stage-1-bounding-box-filter-cheap" title="Permanent link">&para;</a></h3>
+<p>The spatial index stores bounding boxes, not actual geometries. The database first checks which buildings' bounding boxes overlap the search area's bounding box. This is the R-tree traversal from <a href="../spatial-indexing/#search-algorithm">Spatial Indexing</a> — fast, index-based, eliminates most of the data.</p>
+<h3 id="stage-2-exact-geometry-test-expensive">Stage 2: Exact Geometry Test (expensive)<a class="headerlink" href="#stage-2-exact-geometry-test-expensive" title="Permanent link">&para;</a></h3>
+<p>Bounding boxes are rectangles — they're an approximation. A building whose bounding box overlaps the search area might not actually intersect it:</p>
+<pre><code>Search area (circle):         Building bounding box:
+                              ┌─────────────────┐
+       ╭───╮                  │   ┌──┐          │
+      │     │                 │   │  │          │
+       ╰───╯                  │   │  └────┐    │
+                              │   │       │    │
+                              │   └───────┘    │
+                              └─────────────────┘
+                              ↑ bbox overlaps, but the actual
+                                L-shaped building may not intersect
 </code></pre>
-<p><strong>Why:</strong> Each format optimized for its use case</p>
+<p>For each candidate from stage 1, the database computes the exact geometric intersection. This is computationally expensive — it involves testing actual polygon edges — but it only runs on the small set of candidates, not the entire table.</p>
+<h3 id="why-this-matters">Why This Matters<a class="headerlink" href="#why-this-matters" title="Permanent link">&para;</a></h3>
+<p>If your table has 1 million buildings and you're searching a small area:</p>
+<pre><code>Stage 1 (bounding box filter):  1,000,000 → 200 candidates
+Stage 2 (exact geometry test):  200 → 150 actual results
+</code></pre>
+<p>The expensive exact test runs on 200 features instead of 1,000,000. The spatial index made this possible by cheaply eliminating 99.98% of the data.</p>
+<p>PostGIS does both stages automatically when you have a spatial index and use functions like <code>ST_Intersects</code>, <code>ST_Within</code>, or <code>ST_Contains</code>. You don't need to code the two stages yourself.</p>
+<h2 id="select-only-what-you-need">SELECT Only What You Need<a class="headerlink" href="#select-only-what-you-need" title="Permanent link">&para;</a></h2>
+<pre><code class="language-sql">-- Fetches geometry you may not need
+SELECT * FROM buildings WHERE type = 'commercial';
+
+-- Only what you actually use
+SELECT name, area FROM buildings WHERE type = 'commercial';
+</code></pre>
+<p>This matters differently depending on the engine:</p>
+<p><strong>Row-based (SQLite/PostGIS):</strong> The engine reads the full row from disk regardless — all columns are packed together (see <a href="../row-vs-columnar/#row-based-storage">Row-Based Storage</a>). But <code>SELECT *</code> still wastes network bandwidth and application memory. Geometry columns are large (hundreds to thousands of bytes per polygon), so avoiding unnecessary geometry transfer adds up.</p>
+<p><strong>Columnar (DuckDB):</strong> The engine benefits directly — it only reads the columns you ask for from disk. Skipping the geometry column can mean reading a fraction of the data. This is the principle we saw with the <a href="(relational-databases.md#row-based-vs-column-based-engines)">SQLite-vs-DuckDB comparison</a>.</p>
+<h2 id="combined-filters">Combined Filters<a class="headerlink" href="#combined-filters" title="Permanent link">&para;</a></h2>
+<p>This is the key advantage of a database over file-based formats.</p>
+<pre><code class="language-sql">SELECT name, area FROM buildings
+WHERE ST_Within(geom, oslo_boundary)
+AND type = 'commercial'
+AND area &gt; 1000;
+</code></pre>
+<p>PostGIS's <strong>query planner</strong> can combine multiple indexes. It might:</p>
+<ol>
+<li>Use the spatial index to find buildings in Oslo (~10,000 candidates)</li>
+<li>Use the index on <code>type</code> to find commercial buildings (~50,000 candidates)</li>
+<li>Intersect those candidate sets</li>
+<li>Filter the remaining candidates by area</li>
+</ol>
+<p>Or it might decide the spatial filter is more selective and apply that first, then check the other conditions on the candidates. The query planner makes these decisions based on table statistics — it picks whichever approach reads the least data.</p>
+<p>With a file-based format like FlatGeobuf, you can only filter spatially (by bounding box). Any attribute filtering happens after the features are already loaded into memory. PostGIS can use all conditions to narrow down results before reading the full row data.</p>
+<h2 id="explain-checking-your-query-plan">EXPLAIN: Checking Your Query Plan<a class="headerlink" href="#explain-checking-your-query-plan" title="Permanent link">&para;</a></h2>
+<p>How do you know if your indexes are actually being used? <code>EXPLAIN</code> shows what the database plans to do:</p>
+<pre><code class="language-sql">EXPLAIN SELECT name FROM buildings
+WHERE ST_Within(geom, oslo_boundary) AND type = 'commercial';
+</code></pre>
+<p>This outputs the query plan — a tree of operations. The key things to look for:</p>
+<ul>
+<li><strong>Index Scan</strong> or <strong>Bitmap Index Scan</strong> — the database is using an index (good)</li>
+<li><strong>Seq Scan</strong> (sequential scan) — the database is reading every row (may indicate a missing index)</li>
+<li><strong>Filter</strong> — a condition applied after reading rows (not index-assisted)</li>
+</ul>
+<p><code>EXPLAIN ANALYZE</code> actually runs the query and shows real execution times alongside the plan:</p>
+<pre><code class="language-sql">EXPLAIN ANALYZE SELECT name FROM buildings
+WHERE ST_Within(geom, oslo_boundary) AND type = 'commercial';
+</code></pre>
+<p>This is how you verify that adding an index actually improved things. If the output shows a Seq Scan where you expected an Index Scan, you may need to create an index on that column.</p>
+<p>SQLite has a simpler version:</p>
+<pre><code class="language-sql">EXPLAIN QUERY PLAN SELECT name FROM buildings WHERE type = 'commercial';
+-- Output: SEARCH buildings USING INDEX idx_buildings_type (type=?)
+</code></pre>
+<h2 id="table-design-tips">Table Design Tips<a class="headerlink" href="#table-design-tips" title="Permanent link">&para;</a></h2>
+<p>These are practical guidelines, not strict rules:</p>
+<p><strong>Index columns you filter by.</strong> If you frequently query <code>WHERE type = ...</code>, create an index on <code>type</code>. If you frequently query by spatial location, create a spatial index on the geometry column.</p>
+<p><strong>Use foreign keys for data integrity.</strong> Foreign keys ensure that a <code>municipality_id</code> in <code>buildings</code> always references a valid row in <code>municipalities</code> (see <a href="../../databases/relational-databases/#relations">Relations</a>).</p>
+<pre><code class="language-sql">ALTER TABLE buildings ADD CONSTRAINT fk_municipality
+    FOREIGN KEY (municipality_id) REFERENCES municipalities(id);
+</code></pre>
+<p><strong>Choose appropriate data types.</strong> Don't store numbers as text. A <code>TEXT</code> column storing "1200" can't be efficiently compared with <code>&gt; 1000</code> — the database would do string comparison instead of numeric comparison.</p>
+<p><strong>Consider separating large geometry from frequently-queried attributes.</strong> If you often query attributes without needing geometry (dashboards, reports), having the geometry in the same row-based table means the engine reads it anyway. One option is to keep a separate table for geometry, joined by ID. This is an advanced technique — only worth it when geometry dominates your storage and most queries don't need it.</p>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Physical layout matters</strong> - How data is stored on disk determines performance</li>
-<li><strong>Row-based wins for complete records</strong> - One block read gets all attributes</li>
-<li><strong>Columnar wins for analytics</strong> - Read only columns needed, skip irrelevant data</li>
-<li><strong>Compression favors columnar</strong> - Similar values together enable dictionary/run-length encoding</li>
-<li><strong>Writes favor row-based</strong> - One record = one block, no need to touch multiple columns</li>
-<li><strong>No universal best</strong> - Choose based on access patterns</li>
-<li><strong>Hybrid approaches work</strong> - Use both for different stages of data lifecycle</li>
+<li><strong>Create indexes on columns you filter by</strong> — turns O(n) scans into O(log n) lookups</li>
+<li><strong>Spatial indexes use bounding boxes</strong> — cheap first stage eliminates most data</li>
+<li><strong>Two-stage filtering</strong> — bounding box filter then exact geometry test, done automatically by PostGIS</li>
+<li><strong>Select only needed columns</strong> — especially important with large geometry columns</li>
+<li><strong>Databases combine multiple indexes</strong> — the query planner picks the most efficient strategy</li>
+<li><strong>Use EXPLAIN to verify</strong> — check that your indexes are actually being used</li>
 </ol>
 <h2 id="related-topics">Related Topics<a class="headerlink" href="#related-topics" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../file-formats/">File Formats Overview</a> - Which formats use which storage</li>
-<li><a href="../../file-formats/geoparquet/">GeoParquet</a> - Columnar format details</li>
-<li><a href="../../file-formats/flatgeobuf/">FlatGeobuf</a> - Row-based with spatial index</li>
-<li>Write Performance - (To be written) - Detailed write comparisons</li>
-<li>Read Performance - (Not yet read-y) - Detailed read comparisons</li>
+<li><a href="../../databases/relational-databases/">Relational Databases</a> — B-tree indexes, row vs column engines</li>
+<li><a href="../spatial-indexing/">Spatial Indexing</a> — R-tree structure and search algorithm</li>
+<li><a href="../row-vs-columnar/">Row-Based vs Columnar Storage</a> — Why SELECT columns matter differently per engine</li>
+<li><a href="../../databases/postgresql-postgis/">PostgreSQL + PostGIS</a> — GiST indexes, spatial functions, combined queries</li>
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://parquet.apache.org/docs/file-format/">Parquet Format Documentation</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Column-oriented_DBMS">Column-Oriented DBMS (Wikipedia)</a></li>
-<li><a href="https://duckdb.org/why_duckdb#fast-analytical-queries">DuckDB: Why Columnar?</a></li>
+<li><a href="https://www.postgresql.org/docs/current/using-explain.html">PostgreSQL EXPLAIN Documentation</a></li>
+<li><a href="https://postgis.net/workshops/postgis-intro/indexing.html">PostGIS Indexing Workshop</a></li>
+<li><a href="https://www.sqlite.org/queryplanner.html">SQLite Query Planning</a></li>
 </ul>
-<!-- Reference-style links -->
 
 
 
