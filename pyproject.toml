@@ -16,3 +16,8 @@ dependencies = [
     "pymdown-extensions>=10.20.1",
     "python-markdown-math>=0.9",
 ]
+
+[tool.uv.workspace]
+members = [
+    "deployments/shared",
+]

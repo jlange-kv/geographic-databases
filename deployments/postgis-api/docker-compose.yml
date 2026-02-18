@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: postgis-api-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: geodata
+    ports:
+      - "5432:5432"
+    volumes:
+      # Auto-run init.sql on first startup
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      # Persist data across restarts
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ..  # Build context includes both postgis-api and shared
+      dockerfile: postgis-api/Dockerfile
+    container_name: postgis-api
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/geodata
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

@@ -88,7 +88,7 @@ These operations would require loading everything into memory with file-based wo
 
 ### Spatial Indexes
 
-PostGIS uses **GiST indexes** (Generalized Search Trees) — PostgreSQL's framework for building R-tree-like structures. Same concept as [FlatGeobuf's R-tree][spatial-indexing]: hierarchical bounding boxes, branch pruning.
+PostGIS uses **GiST indexes** (Generalized Search Trees) — PostgreSQL's framework for building [R-tree-like structures][spatial-indexing]: hierarchical bounding boxes, branch pruning.
 
 ```sql
 -- Create spatial index
