@@ -10,7 +10,7 @@ services:
       - "5432:5432"
     volumes:
       # Auto-run init.sql on first startup
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       # Persist data across restarts
       - postgres_data:/var/lib/postgresql/data
     healthcheck:

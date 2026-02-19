@@ -9,8 +9,13 @@ wheels/
 # Virtual environments
 .venv
 
+# Local files
+.evn*
+
 data
 
 site
 
 seed-data
+
+skip_docs

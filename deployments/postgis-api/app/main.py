@@ -19,8 +19,9 @@ async def lifespan(app: FastAPI):
     Runs on startup (before yield) and shutdown (after yield).
     """
     # Startup: initialize and connect backend
-    backend = PostGISBackend(settings.database_url)
+    backend = PostGISBackend(settings.connection_url)
     await backend.connect()
+    await backend.initialize_schema()
     set_backend(backend)
     print("✓ Connected to PostGIS")
 

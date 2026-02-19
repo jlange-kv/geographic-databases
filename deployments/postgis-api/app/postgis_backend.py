@@ -21,6 +21,20 @@ class PostGISBackend(StorageBackend):
         )
         await self._pool.open()
 
+    async def initialize_schema(self) -> None:
+        async with self._pool.connection() as conn:
+            await conn.execute("CREATE EXTENSION IF NOT EXISTS postgis")
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS jakob_features (
+                    id SERIAL PRIMARY KEY,
+                    geometry geometry(Geometry, 4326),
+                    properties JSONB NOT NULL DEFAULT '{}'
+                )
+            """)
+            await conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_jakob_features_geom ON jakob_features USING GIST (geometry)"
+            )
+
     async def disconnect(self) -> None:
         if self._pool is not None:
             await self._pool.close()
@@ -38,7 +52,7 @@ class PostGISBackend(StorageBackend):
             serialised_geom = json.dumps(feature.geometry.model_dump())
             result = await conn.execute(
                 """
-                INSERT INTO features (geometry, properties)
+                INSERT INTO jakob_features (geometry, properties)
                 VALUES (ST_GeomFromGeoJSON(%(geometry)s), %(properties)s)
                 RETURNING id, ST_AsGeoJSON(geometry) AS geometry, properties
                 """,
@@ -55,7 +69,7 @@ class PostGISBackend(StorageBackend):
             result = await conn.execute(
                 """
                 SELECT id, ST_AsGeoJSON(geometry) AS geometry, properties 
-                FROM features WHERE id = %(id)s
+                FROM jakob_features WHERE id = %(id)s
                 """,
                 {"id": feature_id},  # Prevent SQL Injection
             )
@@ -68,7 +82,7 @@ class PostGISBackend(StorageBackend):
         async with self._pool.connection() as conn:
             query = """
                     SELECT id, ST_AsGeoJSON(geometry) AS geometry, properties
-                    FROM features 
+                    FROM jakob_features 
                     """
             params = {"limit": limit, "offset": offset}
             if bbox is not None:
@@ -88,7 +102,7 @@ class PostGISBackend(StorageBackend):
         async with self._pool.connection() as conn:
             result = await conn.execute(
                 """
-                UPDATE features
+                UPDATE jakob_features
                 SET geometry = ST_GeomFromGeoJSON(%(geometry)s), properties = %(properties)s
                 WHERE id = %(id)s
                 RETURNING id, ST_AsGeoJSON(geometry) as geometry, properties 
@@ -108,7 +122,7 @@ class PostGISBackend(StorageBackend):
         async with self._pool.connection() as conn:
             result = await conn.execute(
                 """
-                DELETE FROM features WHERE id = %(id)s
+                DELETE FROM jakob_features WHERE id = %(id)s
                 """,
                 {"id": feature_id},
             )
@@ -116,6 +130,6 @@ class PostGISBackend(StorageBackend):
 
     async def count_features(self) -> int:
         async with self._pool.connection() as conn:
-            result = await conn.execute("SELECT COUNT(*) FROM features")
+            result = await conn.execute("SELECT COUNT(*) FROM jakob_features")
             row = await result.fetchone()
         return row["count"]
