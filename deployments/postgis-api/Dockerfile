@@ -21,9 +21,6 @@ RUN uv sync --frozen --no-dev
 # Stage 2: Runtime image
 FROM python:3.12-slim
 
-# Install uv
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
-
 WORKDIR /app
 
 # Copy virtual environment from base stage
@@ -38,5 +35,5 @@ COPY postgis-api/app ./app
 # Expose port
 EXPOSE 8000
 
-# Run the application using uv
-CMD ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run the application directly from the virtual environment (no uv at runtime)
+CMD ["/app/.venv/bin/uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
